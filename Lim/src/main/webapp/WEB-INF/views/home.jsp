@@ -12,5 +12,7 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+<p> 주소는 ${myAdress}</p>
+<p> 번호는 ${myMobile}</p>
 </body>
 </html>
