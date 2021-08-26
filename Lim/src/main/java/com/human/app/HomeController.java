@@ -10,8 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Handles requests for the application home page.
@@ -47,9 +49,12 @@ public class HomeController {
 	}
 
 	@RequestMapping("/info")
-	public String doInfo(HttpServletRequest hsr, Model model) {
-		String uid=hsr.getParameter("userid");
-		String addr=hsr.getParameter("address");
+//	public String doInfo(HttpServletRequest hsr, Model model) {
+//		String uid=hsr.getParameter("userid");
+//		String addr=hsr.getParameter("address");
+	public String doInfo(@RequestParam("userid") String uid,
+						 @RequestParam("address") String addr, 
+						 Model model) {
 		model.addAttribute("loginid",uid);
 		model.addAttribute("region",addr);
 		return "viewinfo";
@@ -65,8 +70,9 @@ public class HomeController {
 		return "choose";
 	}
 	@RequestMapping("/selected")
-	public String doJob(HttpServletRequest hsr, Model model) {
-		String strPath=hsr.getParameter("path");
+//	public String doJob(HttpServletRequest hsr, Model model) 
+	public String doJob(@RequestParam("path") String strPath, Model model){
+//		String strPath=hsr.getParameter("path");
 		if(strPath.equals("login")) {
 			return "getinfo";
 		} else if (strPath.equals("newperson")) {
@@ -74,6 +80,15 @@ public class HomeController {
 		} else {
 			return "choose";
 		}
+	}
+	@RequestMapping("/today/{daynumber}")
+	public String showNumber(@PathVariable int dayNumber,
+							Model model) {
+		model.addAttribute("day_num",dayNumber);
+//		model.addAttribute("addr",address);
+//		model.addAttribute("uid",userid);/{address}/{userid}@PathVariable String address, 
+//							@PathVariable String userid,
+		return "today";
 	}
 	
 }
