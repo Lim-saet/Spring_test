@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인창</title>
 </head>
 <body>
-<form method="get" action="/app/info">
+<form method="post" action="/app/check_user">
 ID: <input type=text name=userid>
-PW: <input type=text name=pw>
+PW: <input type=password name=pw>
 <input type=submit value=로그인>
 <a href=selected?path= name=back>취소</a>
 </form>
