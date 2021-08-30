@@ -11,7 +11,8 @@
 ID: <input type=text name=userid>
 PW: <input type=password name=pw>
 <input type=submit value=로그인>
-<a href=selected?path= name=back>취소</a>
+<input type=reset value=취소>
+<a href=selected?path= name=back>홈페이지로</a>
 </form>
 </body>
 </html>

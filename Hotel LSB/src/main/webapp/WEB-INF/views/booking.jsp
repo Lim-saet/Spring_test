@@ -11,6 +11,9 @@
     p{
     font-size: 20px;
     }
+     a {
+        text-decoration-line: none;
+    }
     .rname {
         width:200px;
         height:300px;

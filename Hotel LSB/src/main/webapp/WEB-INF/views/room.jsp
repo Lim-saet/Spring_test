@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +11,6 @@
 <style>
     p{
         font-size: 20px;
-    }
-    table {
-        border: 1px solid black;
-        
     }
     a {
         text-decoration-line: none;
@@ -40,10 +38,17 @@
         <h1>호텔객실관리페이지</h1>
         <header>
         <section id="container"></section>
-            <p> <a href=/app/booking>예약관리&nbsp&nbsp&nbsp</a> 
+            <p> <a href=/app/booking>예약관리</a>&nbsp&nbsp&nbsp 
            객실관리
-            
-            <a href=/app/logout name=back>로그아웃</a></p>
+            &nbsp&nbsp&nbsp 
+            <a href=/app/logout name=back>로그아웃</a></p><br>
+            <select size=10 style='width:250px;'>
+            <c:forEach items="${list}" var="room">
+            <option>
+            ${room.roomcode},${room.name},${room.type},${room.howmany},${room.howmuch}
+            </option>
+            </c:forEach>
+            </select>
         </header>
         <table>
          <div class= d_rcategory>
@@ -72,7 +77,7 @@
                     <br>
                     </span>
              <div class=r_possible>
-                <table border="1" bordercolor="white" width="150" height="300">
+                <table border="1" bordercolor="black" width="150" height="300">
                     <tr><td align="middle"><a href =#>한라산</a>
                         <br>
                         <a href =#>백두산</a>
@@ -89,6 +94,8 @@
         </table>
          <div class=room_reserv>
              <table>
+             <tr><td align="middle">
+             <br>
             객실이름 
             <input type="text" id=roomname><pre></pre>
             숙박기간 
@@ -98,17 +105,18 @@
             1박비용
             <input type="text" id=onedaypri>원<pre></pre>
             총 숙박비
-            <input type="text" id=onedaypri>원<pre></pre>
+            <input type="text" id=total>원<pre></pre>
             예약자모바일
             <input type=text id=phonenum><pre></pre>
             <input type=button id=register value="   등록   ">&nbsp&nbsp&nbsp   
-            <input type=button id=register value="   삭제   ">&nbsp&nbsp&nbsp  
-            <input type=button id=register value="   클리어   ">
+            <input type=button id=delet value="   삭제   ">&nbsp&nbsp&nbsp  
+            <input type=button id=clear value="   클리어   ">
+            </td></tr>
         </table>
          </div>
         <div class=already>
             <span style="font-size: 20px;">예약된 객실</span><br>
-            <table border="1" bordercolor="white" width="150" height="200">
+            <table border="1" bordercolor="black" width="150" height="200">
          <tr><td align="middle">광덕산<br>흑성산<br>태조산<br>관악산</td></tr>
 
             </table>
