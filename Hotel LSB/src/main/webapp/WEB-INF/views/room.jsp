@@ -72,12 +72,12 @@
                     <br>
                     </span>
              <div class=r_possible>
-                <table border="1" bordercolor="black" width="150" height="300">
+                <table border="1" bordercolor="black" width="250" height="300">
                     <tr><td align="middle">
-                     <select size=10 style='width:150px;'>
+                     <select size=10 style='width:250px;'>
             			<c:forEach items="${list}" var="room">
-            				<option value='${room.roomcode},${room.type}'>
-            					${room.name},${room.howmany}명,${room.howmuch}원
+            				<option value='${room.roomcode}'>
+            					${room.roomname},${room.typename},${room.howmany}명,${room.howmuch}원
             				</option>
             			</c:forEach>
             		</select>
@@ -125,4 +125,9 @@
         </section>
 
 </body>
+<script src= 'http://code.jquery.com/jquery-3.5.0.js'>
+	$(document)
+		.on('click','#'
+
+</script>
 </html>
