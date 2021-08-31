@@ -21,16 +21,17 @@
     }
     .room_reserv {
         position: relative;
-        left: 200px;
+        left: 300px;
         bottom: 300px;
+        right: 200px;
         width: 420px;
-        height: 300px;
+        height: 400px;
         border: solid 2px black;
     }
     .already {
         position:relative;
-        left: 700px;
-        bottom: 630px;
+        left: 800px;
+        bottom: 730px;
     }
 </style>
 <body>
@@ -42,13 +43,7 @@
            객실관리
             &nbsp&nbsp&nbsp 
             <a href=/app/logout name=back>로그아웃</a></p><br>
-            <select size=10 style='width:250px;'>
-            <c:forEach items="${list}" var="room">
-            <option>
-            ${room.roomcode},${room.name},${room.type},${room.howmany},${room.howmuch}
-            </option>
-            </c:forEach>
-            </select>
+            
         </header>
         <table>
          <div class= d_rcategory>
@@ -78,19 +73,18 @@
                     </span>
              <div class=r_possible>
                 <table border="1" bordercolor="black" width="150" height="300">
-                    <tr><td align="middle"><a href =#>한라산</a>
-                        <br>
-                        <a href =#>백두산</a>
-                        <br>
-                        <a href =#>남산</a>
-                        <br>
-                        <a href =#>수명산</a>
-                        <br>
-                        <a href =#>태조산</a>
+                    <tr><td align="middle">
+                     <select size=10 style='width:150px;'>
+            			<c:forEach items="${list}" var="room">
+            				<option value='${room.roomcode},${room.type}'>
+            					${room.name},${room.howmany}명,${room.howmuch}원
+            				</option>
+            			</c:forEach>
+            		</select>
                     </td></tr>          
                        </table>
             
-         </div>
+         </div> 
         </table>
          <div class=room_reserv>
              <table>
@@ -98,6 +92,12 @@
              <br>
             객실이름 
             <input type="text" id=roomname><pre></pre>
+           방 종류
+           <select size=5 style='width:120px;' id=selType2>
+           		<c:forEach items="${type}" var="room">
+           			<option value='${room.typecode}'>${room.name}</option>
+           		</c:forEach>
+           </select><pre></pre>
             숙박기간 
             <input type="date" id=month> ~ <input type="date" id=month>(N박)<br><br>
             숙박인원 
@@ -123,7 +123,6 @@
 
         </div>
         </section>
-<a href=selected?path=/booking name=gotobook>예약관리</a>
-<a href=selected?path= name=back>로그아웃</a>
+
 </body>
 </html>

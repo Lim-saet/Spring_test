@@ -66,9 +66,21 @@ public class HomeController {
 	      }
 	      //여기서 interface 호출하고 결과를 room.jsp에 전달
 	      iRoom room=sqlSession.getMapper(iRoom.class);
+	      //그 암튼 나는 베껴쓸 때 ㅐ자주 쓰는 방법인데 처음보는 문장구조면 컨트롤로 디플리케이션 확인하면 편해
+	      //색깔들어오는거보이지 컨트롤 +마우스 클릭 or 마우스 오버하면됑ㅎㅇㅎ 그래서 duplicated variable <- 변수명 중복 같은거 예방할 때도 좋고 암튼.. 
+
 	      ArrayList<Roominfo> roominfo=room.getRoomList();
 	      model.addAttribute("list",roominfo);
+	      
+	      ArrayList<Roomtype> roomtype=room.getRoomType();
+	      model.addAttribute("type",roomtype);
+	      
+//	        iRoom room_type=sqlSession.getMapper(iRoom.class);
+//			ArrayList<Roomtype> roomtype=room_type.getRoomType();
+//			model.addAttribute("list2",roomtype); 이런식으로 햇음.
 	      return "room";
+	      
+	      
 	   }
   
 	@RequestMapping("/selected")

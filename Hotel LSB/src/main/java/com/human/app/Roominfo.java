@@ -5,7 +5,7 @@ public class Roominfo {
 	private String name;
 	private int type;
 	private int howmany;
-	private int howmuch;
+	private int howmuch; 
 	public Roominfo () {}
 	public Roominfo(int roomcode, String name, int type, int howmany, int howmuch) {
 		//super();

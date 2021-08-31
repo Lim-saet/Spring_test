@@ -50,7 +50,7 @@
          태조산<br>
          흑성산<br>
     </div>
-    <table border="1" bordercolor="black" width="300" height="400">
+    <table border="1" bordercolor="black" width="350" height="400">
     <div class="rcont">
     <tr><td align="middle">
         객실이름 
