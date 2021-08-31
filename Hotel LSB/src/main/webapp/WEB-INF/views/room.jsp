@@ -74,7 +74,7 @@
              <div class=r_possible>
                 <table border="1" bordercolor="black" width="250" height="300">
                     <tr><td align="middle">
-                     <select size=10 style='width:250px;'>
+                     <select size=10 style='width:250px;' id=seltype>
             			<c:forEach items="${list}" var="room">
             				<option value='${room.roomcode}'>
             					${room.roomname},${room.typename},${room.howmany}명,${room.howmuch}원
@@ -125,9 +125,41 @@
         </section>
 
 </body>
-<script src= 'http://code.jquery.com/jquery-3.5.0.js'>
-	$(document)
-		.on('click','#'
+<script src= 'http://code.jquery.com/jquery-3.6.0.js'>
+  $(document).ready(function(){
+		$("#seltype").change(function(){
+			
+			 var arr = $('#this option:selected').text().split(",");
+			 
+			 $('#roomname').val(arr[0]);
+			 console.log(arr[0]);
+			 for(i=1;i<5;i++){
+			 if(arr[1]==$('#selType2').val('i'))
+			 {$('#selType2').val('i').prop("selected",true);
+			 }
+		  }
+			 $('#stayperson').val(arr[2]);
+			 $('#onedaypri').val(arr[3]);
+		}
+	 	
+	})
 
+	/*function appear(obj){
+		 var arr = $('#obj option:selected').text().split(","); 
+		alert('#seltype option selected'.text()); 
+		
+	     $('#roomname').val(arr[0]);
+		 console.log(arr[0]);
+		 for(i=1;i<5;i++){
+		 if(arr[1]==$('#selType2').val('i'))
+		 {$('#selType2').val('i').prop("selected",true);
+		 }
+	  }
+		 $('#stayperson').val(arr[2]);
+		 $('#onedaypri').val(arr[3]);
+	   }
+	
+	 }
+	}*/
 </script>
 </html>
