@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>호텔객실 예약관리</title>
 </head>
 <body>
-<p>로그인한 ID : ${loginid}</p>
+<p>* 로그인한 ID : ${loginid} *</p>
 <a href=selected?path= name=back>돌아가기</a>
 <a href=selected?path=login name=cancel1>취소</a>
 </body>
