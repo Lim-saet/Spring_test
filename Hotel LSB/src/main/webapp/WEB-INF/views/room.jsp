@@ -75,11 +75,11 @@
                 <table border="1" bordercolor="black" width="250" height="300">
                     <tr><td align="middle">
                      <select size=10 style='width:250px;' id=seltype>
-            			<c:forEach items="${list}" var="room">
+            			<%-- <c:forEach items="${list}" var="room">
             				<option value='${room.roomcode}'>
             					${room.roomname},${room.typename},${room.howmany}명,${room.howmuch}원
-            				</option>
-            			</c:forEach>
+            				</option> 
+            			</c:forEach>--%>
             		</select>
                     </td></tr>          
                        </table>
@@ -92,6 +92,7 @@
              <br>
             객실이름 
             <input type="text" id=roomName><pre></pre>
+            <input type=text id=roomcode>
            방 종류
            <select size=5 style='width:120px;' id=selType2>
            		<c:forEach items="${type}" var="room">
@@ -108,8 +109,8 @@
             <input type="text" id=total>원<pre></pre>
             예약자모바일
             <input type=text id=phonenum><pre></pre>
-            <input type=button id=register value="   등록   ">&nbsp&nbsp&nbsp   
-            <input type=button id=delete value="   삭제   ">&nbsp&nbsp&nbsp  
+            <input type=button id=register value="   등록   ">&nbsp;&nbsp;&nbsp;   
+            <input type=button id=delete value="   삭제   ">&nbsp;&nbsp;&nbsp; 
             <input type=button id=clear value="   클리어   ">
             </td></tr>
         </table>
@@ -135,15 +136,19 @@
 			 var trimArr1=arr[0].trim(); 
 				 
 			 $('#roomName').val(trimArr1);
-			 console.log(arr[0]);
+			 //console.log(arr[0]);
 
 			 $('#selType2 option:contains("'+arr[1]+'")').prop("selected",true);
 		
 			 $('#stayperson').val(arr[2]); 
 			 $('#onedaypri').val(arr[3]); 
+			 
+			 let code=$(this).val();
+			 $('#roomcode').val(code);
+			 
 			 return false;
 	})
-  })
+  })//레디는 여기서 끝나는데?? 지금 구분 오류같음..레디 두개
   $(document)
   		.on('click','#clear',function(){
   			$('#roomName,#selType2,#month,#stayperson,#onedaypri,#total,#phonenum').val('');
@@ -151,10 +156,55 @@
   		})
 		.ready(function(){
 			$.post("http://localhost:8080/app/getRoomList",{},function(result){
-					console.log(result)},
-					'json');
+					console.log(result);
+					$.each(result,function(ndx,value){
+						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+
+							value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
+							$('#seltype').append(str);
+					});
+					},'json');
 			
 		})
+		.on('click','#delete',function(){ //찾음 딜리트가 저기 등록까지 감싸버리는데 자 봐봐 함 해보자!
+			$.post('http://localhost:8080/app/deleteRoom',{roomcode:$('#roomName').val()},
+					function(result){
+				console.log(result);
+				if(result=='ok'){
+					$('#clear').trigger('click');//입력란 비우기
+					$('#selType2 option:selected').remove();//roomlist에서 제거
+				}
+			},'text');
+		})
+			
+  
+			.on('click','#register',function(){
+					let roomname=$('#roomName').val();
+					let roomtype=$('#selType2').val();//이거 셀렉트아이디 맞죠?
+					let howmany=$('#stayperson').val();
+					let howmuch=$('#onedaypri').val();
+					//validation(유효성검사)
+				if(roomname=='' || roomtype=="" || howmany=="" || howmuch==""){
+					alert('누락된 값이 있습니다.');
+					return false;
+				}
+					
+				$.post('http://localhost:8080/app/addRoom',
+					{roomname:roomname,roomtype:roomtype,howmany:howmany,howmuch:howmuch},
+						function(result){
+						if(result=='ok'){
+							location.reload();
+						} else { //update
+							$.post('http://localhost:8080/app/updateRoom',
+								{roomcode:roomcode,roomname:roomname,
+								 roomtype:roomtype,howmany:howmany
+								 howmuch:howmuch}, 
+								 function(result){
+									 if(result='ok'){
+										 location.reload();
+									 }
+					},'text');
+			})
+		
 	/*function appear(obj){
 		 var arr = $('#obj option:selected').text().split(","); 
 		alert('#seltype option selected'.text()); 
