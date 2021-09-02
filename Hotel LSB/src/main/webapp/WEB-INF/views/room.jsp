@@ -193,7 +193,9 @@
 						function(result){
 						if(result=='ok'){
 							location.reload();
-						} else { //update
+						} 
+					},'text');
+			}   else { //update
 							$.post('http://localhost:8080/app/updateRoom',
 								{roomcode:roomcode,roomname:roomname,
 								 roomtype:roomtype,howmany:howmany
