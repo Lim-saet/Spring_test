@@ -53,9 +53,25 @@ public class HomeController {
 	      return "home";
 	   }
 	   @RequestMapping("/login")
-	   public String login() {
+	   public String dologin() {
 	      return "login";
 	   }
+	   
+	   @RequestMapping(value="/signin",method=RequestMethod.POST,
+					produces = "application/text; charset=utf8")
+	   	public String doSignin(HttpServletRequest hsr) {
+		   System.out.println("sign");//들어감
+		   String realname= hsr.getParameter("realname");
+		   System.out.println("name["+realname+"]");//null값으로 들어감
+		   String loginid= hsr.getParameter("loginid");
+		   String password= hsr.getParameter("password");
+
+		   iMember member=sqlSession.getMapper(iMember.class);
+		   member.doSignin(realname, loginid, password);
+		   
+		   return "/login";
+	   }
+	   
 	   @RequestMapping("/newbie")
 	   public String newbie() {
 	      return "newbie";
@@ -134,17 +150,23 @@ public class HomeController {
    @RequestMapping(value="/updateRoom",method=RequestMethod.POST,
   			produces = "application/text; charset=utf8")
    @ResponseBody
-   public String upadteRoom(HttpServletRequest hsr) {
+   public String updateRoom(HttpServletRequest hsr) {
 	   iRoom room=sqlSession.getMapper(iRoom.class);
+	   
+	   int roomcode= Integer.parseInt(hsr.getParameter("roomcode")); 
+	   String roomname=hsr.getParameter("roomname");
+	   int roomtype=Integer.parseInt(hsr.getParameter("roomtype"));
+	   System.out.println("can");
+	   
 	   room.doUpdateRoom(Integer.parseInt(hsr.getParameter("roomcode")),
 			   hsr.getParameter("roomname"),
 			   Integer.parseInt(hsr.getParameter("roomtype")),
 			   Integer.parseInt(hsr.getParameter("howmany")),
-			   Integer.parseInt(hsr.getParameter("howmany")));
+			   Integer.parseInt(hsr.getParameter("howmuch"))); 
+      //System.out.println("roomcode ["+roomcode+"]");
+	  // System.out.println("can");
 	   return "ok";			   
    }
-   iRoom room=sqlSession.getMapper(iRoom.class);
-   
    
    
 	@RequestMapping("/selected")
@@ -159,16 +181,23 @@ public class HomeController {
 		}
 	}
 	@RequestMapping(value="/check_user",method=RequestMethod.POST) 
-		public String check_user(HttpServletRequest hsr,Model model) {
+		public String check_user(HttpServletRequest hsr,Model model) { 
 			String userid=hsr.getParameter("userid");
 			String pw=hsr.getParameter("pw");
-		
 			//DB에서 유저확인: 기존유저면 booking,없으면 home으로 
-		HttpSession session=hsr.getSession();
-		session.setAttribute("loginid",userid);
-		
-		return "redirect:/booking"; //RequestMapping의 경로이름
+		iMember member=sqlSession.getMapper(iMember.class);
+			int n = member.doCheckUser(userid,pw); 
+		if(n>0) {
+			HttpSession session=hsr.getSession();
+			session.setAttribute("loginid", userid);////////////이어서 써야함
+			return "redirect:/booking";
+		} else {
+			return "home";
 		}
+	}//일단 실행
+		//여기 리턴이 2개네 else에서 구문 
+		//return "redirect:/booking"; //RequestMapping의 경로이름
+		
 		
 	
 	@RequestMapping(value="/booking", method=RequestMethod.GET)

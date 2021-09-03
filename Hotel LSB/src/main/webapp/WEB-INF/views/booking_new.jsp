@@ -25,7 +25,7 @@
         bottom: 300px;
         right: 200px;
         width: 420px;
-        height: 420px;
+        height: 400px;
         border: solid 2px black;
     }
     .already {
@@ -103,12 +103,10 @@
             <input type="date" id=month> ~ <input type="date" id=month>(N박)<br><br>
             숙박인원 
             <input type="text" id=stayperson><pre></pre>
-      1박비용
+            1박비용
             <input type="text" id=onedaypri><pre></pre>
             총 숙박비
             <input type="text" id=total>원<pre></pre>
-            예약자명
-            <input type="text" id=resev_name><pre></pre>
             예약자모바일
             <input type=text id=phonenum><pre></pre>
             <input type=button id=register value="   등록   ">&nbsp;&nbsp;&nbsp;   

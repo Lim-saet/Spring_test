@@ -9,7 +9,6 @@
 <h1>
 	Hello world!  
 </h1>
-
 <a href='selected?path=login'>로그인하기</a>&nbsp;&nbsp;
 <a href='selected?path=newbie'>회원가입</a>
 </body>
