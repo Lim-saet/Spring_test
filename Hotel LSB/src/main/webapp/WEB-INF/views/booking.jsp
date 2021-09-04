@@ -24,7 +24,7 @@
         left: 300px;
         bottom: 300px;
         right: 200px;
-        width: 420px;
+        width: 390px;
         height: 400px;
         border: solid 2px black;
     }
