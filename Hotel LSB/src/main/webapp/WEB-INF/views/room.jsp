@@ -24,8 +24,8 @@
         left: 300px;
         bottom: 300px;
         right: 200px;
-        width: 420px;
-        height: 420px;
+        width: 280px;
+        height: 300px;
         border: solid 2px black;
     }
     .already {
@@ -36,36 +36,17 @@
 </style>
 <body>
     <section id="wrap">
+    * 로그인한 ID : ${loginid} *
         <h1>호텔객실관리페이지</h1>
         <header>
         <section id="container"></section>
-            <p> <a href=/app/booking>예약관리</a>&nbsp&nbsp&nbsp 
+            <p> <a href=/app/booking>예약관리</a>&nbsp;&nbsp;&nbsp; 
            객실관리
-            &nbsp&nbsp&nbsp 
+            &nbsp;&nbsp;&nbsp; 
             <a href=/app/logout name=back>로그아웃</a></p><br>
             
         </header>
-        <table>
-         <div class= d_rcategory>
-                <tr>
-                    <th>숙박기간</th>
-                    <td><input type="date" id=month> ~ <input type="date" id=month><br><br></td> 
-                </tr>
-                <tr>
-                    <th>객실분류</th>
-                       <td> 
-                           <select>
-                            <option>Suite Room</option>
-                            <option>Family Room</option>
-                            <option>Double Room</option>
-                            <option>Single Room</option>
-                            <option>Dormitory</option>
-                        </select>
-                <input type="button" value="찾기" id="find">
-            </td>
-            </tr>
-         </div>
-        </table><br>
+       
         <table>
                  <span style= "font-size:20px">
                     예약가능
@@ -92,39 +73,26 @@
              <br>
             객실이름 
             <input type="text" id=roomName><pre></pre>
-            <input type=text id=roomcode>
+            <input type=hidden id=roomcode>
            방 종류
            <select size=5 style='width:120px;' id=selType2>
            		<c:forEach items="${type}" var="room">
            			<option value='${room.typecode}'>${room.name}</option>
            		</c:forEach>
            </select><pre></pre>
-            숙박기간 
-            <input type="date" id=month> ~ <input type="date" id=month>(N박)<br><br>
+
             숙박인원 
-            <input type="text" id=stayperson><pre></pre>
+            <input type="number" id=stayperson><pre></pre>
       1박비용
-            <input type="text" id=onedaypri><pre></pre>
-            총 숙박비
-            <input type="text" id=total>원<pre></pre>
-            예약자명
-            <input type="text" id=resev_name><pre></pre>
-            예약자모바일
-            <input type=text id=phonenum><pre></pre>
+            <input type="number" id=onedaypri><pre></pre>
+          
             <input type=button id=register value="   등록   ">&nbsp;&nbsp;&nbsp;   
             <input type=button id=delete value="   삭제   ">&nbsp;&nbsp;&nbsp; 
             <input type=button id=clear value="   클리어   ">
             </td></tr>
         </table>
          </div>
-        <div class=already>
-            <span style="font-size: 20px;">예약된 객실</span><br>
-            <table border="1" bordercolor="black" width="150" height="200">
-         <tr><td align="middle">광덕산<br>흑성산<br>태조산<br>관악산</td></tr>
-
-            </table>
-
-        </div>
+        
         </section>
 
 </body>
@@ -153,7 +121,7 @@
   })
   $(document)
   		.on('click','#clear',function(){
-  			$('#roomName,#selType2,#month,#stayperson,#onedaypri,#total,#phonenum').val('');
+  			$('#roomName,#selType2,#month,#stayperson,#onedaypri,#total,#phonenum,#roomcode').val('');
   			return false;
   		})
 		.ready(function(){
@@ -168,7 +136,7 @@
 		})
 		
 		.on('click','#delete',function(){ //찾음 딜리트가 저기 등록까지 감싸버리는데 자 봐봐 함 해보자!
-			$.post('http://localhost:8080/app/deleteRoom',{roomcode:$('#roomName').val()},
+			$.post('http://localhost:8080/app/deleteRoom',{roomcode:$('#roomcode').val()},
 					function(result){ 
 				console.log(result);
 				if(result=='ok'){
@@ -189,7 +157,7 @@
 					alert('누락된 값이 있습니다.');
 					return false;
 				  }
-				let roomcode=$('roomcode').val();
+				let roomcode=$('#roomcode').val();
 				if(roomcode=='') { //insert
 				$.post('http://localhost:8080/app/addRoom',
 					{roomname:roomname,roomtype:roomtype,howmany:howmany,howmuch:howmuch},

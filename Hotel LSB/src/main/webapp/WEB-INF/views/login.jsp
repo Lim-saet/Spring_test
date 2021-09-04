@@ -11,7 +11,7 @@
 ID: <input type=text name=userid>
 PW: <input type=password name=pw>
 <input type=submit value=로그인>
-<input type=reset value=취소>
+
 <a href=selected?path= name=back>홈페이지로</a>
 </form>
 </body>
@@ -19,15 +19,15 @@ PW: <input type=password name=pw>
 <script>
 $(document)
 .on('submit','#frmLogin',function(){
-	let pstr=$.trim($('input[name=userid]').val));
+	let pstr=$.trim($('input[name=userid]').val());
 	$('input[name=passcode]').val(pstr);
-	pstr=$.trim($('input[name=pw]').val));
+	pstr=$.trim($('input[name=pw]').val());
 	$('input[name=pw]').val(pstr);
-	if($('input[name=userid]').val)==''){
+	if($('input[name=userid]').val()==''){
 		alert('로그인아이디를 입력하세요');
 		return false;
 	}
-	if($('input[name=pw]').val)==''){
+	if($('input[name=pw]').val()==''){
 		alert('비밀번호를 입력하세요');
 		return false;
 	}

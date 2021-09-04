@@ -48,6 +48,8 @@ public class HomeController {
 		
 		return "home";
 	}
+
+
 	  @RequestMapping("/home")
 	   public String home() {
 	      return "home";
@@ -69,7 +71,7 @@ public class HomeController {
 		   iMember member=sqlSession.getMapper(iMember.class);
 		   member.doSignin(realname, loginid, password);
 		   
-		   return "/login";
+		   return "login";
 	   }
 	   
 	   @RequestMapping("/newbie")
@@ -152,10 +154,6 @@ public class HomeController {
    @ResponseBody
    public String updateRoom(HttpServletRequest hsr) {
 	   iRoom room=sqlSession.getMapper(iRoom.class);
-	   
-	   int roomcode= Integer.parseInt(hsr.getParameter("roomcode")); 
-	   String roomname=hsr.getParameter("roomname");
-	   int roomtype=Integer.parseInt(hsr.getParameter("roomtype"));
 	   System.out.println("can");
 	   
 	   room.doUpdateRoom(Integer.parseInt(hsr.getParameter("roomcode")),
