@@ -1,4 +1,4 @@
-package com.human.app;
+package com.human.app; 
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -107,6 +107,21 @@ public class HomeController {
 	      
 	   }
 	   
+	   @RequestMapping(value="/booking",method=RequestMethod.GET)
+	   public String booking(HttpServletRequest hsr,Model model) {
+	      HttpSession session=hsr.getSession();
+	      String id_already=(String)session.getAttribute("loginid");
+	      if(session.getAttribute("loginid")==null || id_already.equals("")) {
+	         return "redirect:/login";
+	      } else {
+	    	  iRoom room=sqlSession.getMapper(iRoom.class);
+	    	  ArrayList<Roomtype> roomtype=room.getRoomType();
+	    	  model.addAttribute("type",roomtype);
+	    	  return "booking"; 
+	      }
+	       
+	   }
+	   
    @RequestMapping(value="/getRoomList",method=RequestMethod.POST,
    					produces = "application/text; charset=utf8")
    @ResponseBody
@@ -127,6 +142,7 @@ public class HomeController {
 	    	  System.out.println(ja.toString());
 	    	  return ja.toString();
 	      }
+   
    @RequestMapping(value="/deleteRoom",method=RequestMethod.POST,
 				produces = "application/text; charset=utf8")
    @ResponseBody
@@ -136,6 +152,7 @@ public class HomeController {
 	   room.doDeleteRoom(roomcode);
 	   return "ok";
    }
+   
    @RequestMapping(value="/addRoom",method=RequestMethod.POST,
    			produces = "application/text; charset=utf8")
 	@ResponseBody
@@ -193,24 +210,45 @@ public class HomeController {
 			return "home";
 		}
 	}//일단 실행
+	
 		//여기 리턴이 2개네 else에서 구문 
 		//return "redirect:/booking"; //RequestMapping의 경로이름
 		
 		
 	
-	@RequestMapping(value="/booking", method=RequestMethod.GET)
-	public String gobooking(HttpServletRequest hsr) {
-//		model.addAttribute("loginid",uid);@RequestParam("userid") String uid
-		
-		HttpSession session=hsr.getSession();
-		String id_already=(String)session.getAttribute("loginid");
-		if(id_already.equals("") || ("loginid")==null){
-			return "redirect:/login";
-		} else {
-			return "booking"; //jsp파일이름
-		}
-		
-	}
+		/*
+		 * @RequestMapping(value="/booking", method=RequestMethod.GET) public String
+		 * gobooking(HttpServletRequest hsr) { //
+		 * model.addAttribute("loginid",uid);@RequestParam("userid") String uid
+		 * 
+		 * HttpSession session=hsr.getSession(); String
+		 * id_already=(String)session.getAttribute("loginid"); if(id_already.equals("")
+		 * || ("loginid")==null){ return "redirect:/login"; } else { return "booking";
+		 * //jsp파일이름 }
+		 * 
+		 * }
+		 */
+	
+	   @RequestMapping(value="/getRoomList2",method=RequestMethod.POST,
+					produces = "application/text; charset=utf8")
+	   @ResponseBody
+	   		public String getRoomList2(HttpServletRequest hsr) {
+		   		iRoom room=sqlSession.getMapper(iRoom.class);
+		   		ArrayList<Roominfo> roominfo=room.getRoomList2();
+				   	 JSONArray ja= new JSONArray();
+			    	  for(int i=0;i<roominfo.size();i++) {
+			    		  JSONObject jo = new JSONObject();
+			    		  jo.put("typename", roominfo.get(i).getTypename());
+			    		  jo.put("howmany", roominfo.get(i).getHowmany());
+			    		  jo.put("howmuch", roominfo.get(i).getHowmuch());
+			    		  jo.put("roomcode", roominfo.get(i).getRoomcode());
+			    		  ja.add(jo);
+	    	  }
+			  System.out.println(ja.toString());
+			  return ja.toString();
+	   }
+	
+	
 	@RequestMapping("/logout")
 	   public String logout(HttpServletRequest hsr) {
 	   HttpSession session=hsr.getSession();

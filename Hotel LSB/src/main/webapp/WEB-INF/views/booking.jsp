@@ -91,8 +91,10 @@
             <input type="text" id=roomName><pre></pre>
          
            방 종류
-           <select size=5 style='width:120px;' id=selType2>
-				<option>연결예정</option>
+			<select size=5 style='width:120px;' id=selType2>
+           		<c:forEach items="${type}" var="room">
+           			<option value='${room.typecode}'>${room.name}</option>
+           		</c:forEach>
            </select><pre></pre>
             숙박인원 
             <input type="text" id=stayPerson><pre></pre>
@@ -100,6 +102,7 @@
             <input type="text" id=maxPerson><pre></pre>
             숙박기간 
             <input type="date" id=month1> ~ <input type="date" id=month2><br><br>
+            
            예약자명 
             <input type="text" id=reserv_name><pre></pre>
 <!--        1박비용
@@ -108,7 +111,7 @@
             <input type="text" id=total>원<pre></pre> -->
             예약자모바일
             <input type=text id=phonenum><pre></pre>
-            <input type=button id=register value="   등록   ">&nbsp;&nbsp;&nbsp;   
+            <input type=button id=ok_reserv value="   예약완료   ">&nbsp;&nbsp;&nbsp;   
             <input type=button id=delete value="   삭제   ">&nbsp;&nbsp;&nbsp; 
             <input type=button id=clear value="   클리어   ">
             </td></tr>
@@ -116,7 +119,7 @@
          </div>
         <div class=already>
             <span style="font-size: 20px;">예약된 객실</span><br>
-            <table border="1" bordercolor="black" width="150" height="200">
+            <table border="1" bordercolor="black" width="150" height="200" id=reserv_wan>
          <tr>
          	<td align="middle">
          		//
@@ -131,6 +134,54 @@
 </body>
 <script src= 'http://code.jquery.com/jquery-3.6.0.js'></script>
 <script>
+$(document)
+	.ready(function(){
+		
+			$.post("http://localhost:8080/app/getRoomList2",{},function(result){
+					console.log(result);
+					$.each(result,function(ndx,value){
+						str='<option value="'+value['roomcode']+'">'
+							+value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
+							$('#seltype').append(str);
+					})
+					},'json');
+			
+			$("#seltype").change(function(){
+				
+				 var arr = $('#seltype option:selected').text().split(",");
+				 
+				 var trimArr1=arr[0].trim(); 
+					 
+				 $('#roomName').val(trimArr1);
+				 	 
+				 $('#maxPerson').val(arr[1]); 
+					
+				 $('#selType2 option:contains("'+arr[0]+'")').prop("selected",true);
+			
+				 let code=$(this).val();
+				 $('#roomcode').val(code);
+				 
+				 return false;
+		})
+		 	.on('click','#ok_reserv',function(){
+		 		let roomname=$('#roomName').val();
+				let roomtype=$('#selType2').val();
+				let howmany=$('#stayperson').val();
+				let max_howmany=$('#maxPerson').val();
+				let date=$('#month1').val();
+				let mobile=$('#phonenum').val();
+				let reserv_name=$('#reserv_name').val();
+				//validation(유효성검사)
+				if(roomname=='' || roomtype=="" || howmany=="" || max_howmany=="" || date==""|| mobile=="" || reserv_name==""){
+					alert('누락된 값이 있습니다.');
+					return false;
+				  }
+				let roomcode=$('#roomcode').val();
+				
+		 	})
+		 	
+		})
+
   
 </script>
 </html>
