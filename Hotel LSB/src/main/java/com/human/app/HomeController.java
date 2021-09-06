@@ -247,7 +247,25 @@ public class HomeController {
 			  System.out.println(ja.toString());
 			  return ja.toString();
 	   }
-	
+	   
+	  @RequestMapping(value="/addBooking",method=RequestMethod.POST,
+				produces = "application/text; charset=utf8")
+	   @ResponseBody
+		public String addBooking(HttpServletRequest hsr) {
+		  	//System.out.println("can");
+		  
+		   String bname=hsr.getParameter("name");
+		   System.out.println("name ["+bname+"]");
+		   	
+		  	int max_person=Integer.parseInt(hsr.getParameter("person"));
+		  	int checkin=Integer.parseInt(hsr.getParameter("checkin"));
+		  	int checkout=Integer.parseInt(hsr.getParameter("checkout"));
+			
+			int mobile=Integer.parseInt(hsr.getParameter("mobile"));
+			iRoom room=sqlSession.getMapper(iRoom.class);
+			room.doAddBooking(max_person,checkin,checkout,bname,mobile);
+			return "ok";
+	}
 	
 	@RequestMapping("/logout")
 	   public String logout(HttpServletRequest hsr) {

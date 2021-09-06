@@ -25,7 +25,7 @@
         bottom: 300px;
         right: 200px;
         width: 390px;
-        height: 400px;
+        height: 410px;
         border: solid 2px black;
     }
     .already {
@@ -89,7 +89,7 @@
              <br>
             객실이름 
             <input type="text" id=roomName><pre></pre>
-         
+         	<input type=value id=roomcode>
            방 종류
 			<select size=5 style='width:120px;' id=selType2>
            		<c:forEach items="${type}" var="room">
@@ -102,13 +102,13 @@
             <input type="text" id=maxPerson><pre></pre>
             숙박기간 
             <input type="date" id=month1> ~ <input type="date" id=month2><br><br>
-            
+             
            예약자명 
             <input type="text" id=reserv_name><pre></pre>
-<!--        1박비용
-            <input type="text" id=onedaypri><pre></pre>
+<!--  1박비용
+            <input type="text" id=onedaypri><pre></pre>-->
             총 숙박비
-            <input type="text" id=total>원<pre></pre> -->
+            <input type="text" id=total><pre></pre> 
             예약자모바일
             <input type=text id=phonenum><pre></pre>
             <input type=button id=ok_reserv value="   예약완료   ">&nbsp;&nbsp;&nbsp;   
@@ -160,28 +160,37 @@ $(document)
 			
 				 let code=$(this).val();
 				 $('#roomcode').val(code);
-				 
+				
 				 return false;
 		})
+	})
+$(document)
 		 	.on('click','#ok_reserv',function(){
 		 		let roomname=$('#roomName').val();
 				let roomtype=$('#selType2').val();
 				let howmany=$('#stayperson').val();
-				let max_howmany=$('#maxPerson').val();
-				let date=$('#month1').val();
+				let max_person=$('#maxPerson').val();
+				let checkin=$('#month1').val();
+				let checkout=$('#month2').val();
 				let mobile=$('#phonenum').val();
-				let reserv_name=$('#reserv_name').val();
+				let bname=$('#reserv_name').val();
+				let total=$('#total').val();
 				//validation(유효성검사)
-				if(roomname=='' || roomtype=="" || howmany=="" || max_howmany=="" || date==""|| mobile=="" || reserv_name==""){
+				if(roomname=='' || roomtype=='' || howmany=="" || max_person=="" || checkin==""|| checkout==""|| mobile=="" || reserv_name=="" || total=="")
+				{
 					alert('누락된 값이 있습니다.');
 					return false;
 				  }
-				let roomcode=$('#roomcode').val();
-				
+				$.post('http://localhost:8080/app/addBooking',
+		 				{max_person:max_person,checkin:checkin
+					     ,checkout:checkout,bname:bname,mobile:mobile}, 
+						function(result){
+					if(result=='ok'){
+						location.reload();
+					} 
+				},'text');
+						
 		 	})
-		 	
-		})
 
-  
 </script>
 </html>

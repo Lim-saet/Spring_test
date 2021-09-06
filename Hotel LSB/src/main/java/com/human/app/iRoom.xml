@@ -32,8 +32,9 @@
 		from room a, roomtype b
 		where a.type=b.typecode
 	</select>
-<!-- 	<insert id="doUpdateBooking">
-		insert into 
-	</insert> -->
+ 	<insert id="doAddBooking">
+		insert into booking(bookcode,person,checkin,checkout,name,mobile)
+		values(seq_booking.nextval,#{param1},#{param2},#{param3},#{param4},#{param5})
+	</insert> 
 	</mapper>
 	

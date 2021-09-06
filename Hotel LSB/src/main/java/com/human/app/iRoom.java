@@ -11,4 +11,5 @@ public interface iRoom {
 	void doUpdateRoom(int roomcode,String roomname,int roomtype, int howmany,int howmuch);
 	
 	ArrayList<Roominfo> getRoomList2();
+	void doAddBooking(int person,int checkin,int checkout,String name,int mobile);
 }
