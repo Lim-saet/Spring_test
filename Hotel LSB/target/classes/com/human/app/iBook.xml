@@ -6,12 +6,14 @@
 	<!-- namespace="인터페이스의 경로명+이름" -->
 <mapper namespace="com.human.app.iBook">
 	<insert id="doAddBooking">
-		insert into booking(bookcode,person,checkin,checkout,name,mobile,roomcode)
-		values(seq_booking.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
+		insert into booking(bookcode,person,checkin,checkout,name,mobile,roomcode,total)
+		values(seq_booking.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7})
 	</insert> 
-<!-- 	<select id="getReserveList" resultType="com.human.app.Bookinfo">
-	 	select a.name roomname, c.type typename, b.person, a.howmany,b.checkin,b.checkout,b.mobile,b.name presonname
-	 	from room a, booking b, roomtype c
-	 	where a.roomcode=b.roomcode, a.type=c.typecode;
-	</select> -->
+ 	<select id="getReserveList" resultType="com.human.app.Bookinfo">
+	 	select a.bookcode,b.roomname,b.roomtype,b.howmany max_howmany,a.howmany person,a.checkin,a.checkout,total,name,mobile
+	 	from book a, room b
+	 	<![CDATA[where a.checkout > #{param1} and a.checkin < #{param2}]]>
+	 	 and a.roomcode=b.roomcode
+	 	 order by a.checkin
+	</select> 
 </mapper>

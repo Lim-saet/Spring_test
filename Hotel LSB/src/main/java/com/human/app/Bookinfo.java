@@ -1,8 +1,10 @@
 package com.human.app;
 
 public class Bookinfo {
-//	private String roomname;
-//	private int type
+	private String roomname;
+	private int roomtype;
+	private int max_howmany;
+	private int total;
 	private int bookcode;
 	private int person;
 	private String checkin;
@@ -11,8 +13,12 @@ public class Bookinfo {
 	private String mobile;
 	private int roomcode;
 	public Bookinfo() {}
-	public Bookinfo(int bookcode, int person, String checkin, String checkout, String name, String mobile,
-			int roomcode) {
+	public Bookinfo(String roomname, int roomtype, int max_howmany, int total, int bookcode, int person, String checkin,
+			String checkout, String name, String mobile, int roomcode) {
+		this.roomname = roomname;
+		this.roomtype = roomtype;
+		this.max_howmany = max_howmany;
+		this.total = total;
 		this.bookcode = bookcode;
 		this.person = person;
 		this.checkin = checkin;
@@ -20,6 +26,30 @@ public class Bookinfo {
 		this.name = name;
 		this.mobile = mobile;
 		this.roomcode = roomcode;
+	}
+	public String getRoomname() {
+		return roomname;
+	}
+	public void setRoomname(String roomname) {
+		this.roomname = roomname;
+	}
+	public int getRoomtype() {
+		return roomtype;
+	}
+	public void setRoomtype(int roomtype) {
+		this.roomtype = roomtype;
+	}
+	public int getMax_howmany() {
+		return max_howmany;
+	}
+	public void setMax_howmany(int max_howmany) {
+		this.max_howmany = max_howmany;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
 	}
 	public int getBookcode() {
 		return bookcode;
@@ -63,5 +93,4 @@ public class Bookinfo {
 	public void setRoomcode(int roomcode) {
 		this.roomcode = roomcode;
 	}
-	
 }

@@ -173,14 +173,15 @@ public class HomeController {
 	   System.out.println("can");
 			int person=Integer.parseInt(hsr.getParameter("person"));
 			String checkin=hsr.getParameter("checkin");
-			 System.out.println("checkin ["+checkin+"]");
+			 //System.out.println("checkin ["+checkin+"]");
 			String checkout=hsr.getParameter("checkout");
 			String name=hsr.getParameter("name");
 			String mobile=hsr.getParameter("mobile");
 			int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
+			int total=Integer.parseInt(hsr.getParameter("total"));
 			
 			iBook book=sqlSession.getMapper(iBook.class);
-			book.doAddBooking(person,checkin,checkout,name,mobile,roomcode);
+			book.doAddBooking(person,checkin,checkout,name,mobile,roomcode,total);
 			return "ok";
 	}
    

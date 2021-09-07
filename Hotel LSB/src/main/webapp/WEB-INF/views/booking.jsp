@@ -25,7 +25,7 @@
         bottom: 300px;
         right: 200px;
         width: 390px;
-        height: 410px;
+        height: 430px;
         border: solid 2px black;
     }
     .already {
@@ -55,9 +55,13 @@
                 <tr>
                     <th>객실분류</th>
                        <td> 
-                           <select>
-                           <option>연결예정</option>
-                        </select>
+                         <select size=1 style='width:120px;' id=selType1>
+           			<option value='-'>전체</option>
+           			<option value='1'>Suite Room</option>
+           			<option value='2'>Family Room</option>
+           			<option value='3'>Double Room</option>
+           			<option value='4'>Single Room</option>
+           </select>
                 <input type="button" value="찾기" id="find">
             </td>
             </tr>
@@ -122,7 +126,7 @@
             <table border="1" bordercolor="black" width="300" height="200" id=reserv_wan>
          <tr>
          	<td align="middle">
-         		<select size=10 style='width:500px;' id=reservList>
+         		<select size=10 style='width:600px;' id=reservList>
          			
          		</select>
          	</td>
@@ -150,7 +154,13 @@ $(document)
 		})
 .ready(function(){
 		$("#seltype").change(function(){
-			
+				if($('#checkin').val()==''){
+					alert("체크인날짜를 먼저 선택해주세요!");
+					return false;
+				} else if ($('#checkout').val()==''){
+					alert("체크아웃날짜를 선택해주세요!");
+					return false;
+				}
 			 var arr = $('#seltype option:selected').text().split(",");
 			 
 			 var trimArr1=arr[0].trim(); 
@@ -166,8 +176,9 @@ $(document)
 	  			var ar1=start.split('-');
 	  			var ar2=end.split('-');
 	  			
-	  			var da1= new Date(ar1[0], ar1[1], ar1[2]);
-	  			var da2= new Date(ar2[0], ar2[1], ar2[2]);
+	  			var da1= new Date(ar1[0], ar1[1]-1, ar1[2]);
+	  			var da2= new Date(ar2[0], ar2[1]-1, ar2[2]);
+	  			console.log(da1);
 	  			var dif= da2-da1;
 	  			var c_day=24*60*60*1000;
 	  			
@@ -186,12 +197,13 @@ $(document)
 $(document)
 		 	.on('click','#ok_reserv',function(){
 		 		let roomcode=$('#roomcode').val();
-				let howmany=$('#stayPerson').val();
-				let person=$('#maxPerson').val();
+				let person=$('#stayPerson').val();
+				let howmany=$('#maxPerson').val();
 				let checkin=$('#checkin').val();
 				let checkout=$('#checkout').val();
 				let mobile=$('#phonenum').val();
 				let name=$('#reserv_name').val();
+				let total=$('#total').val();
 				
 				//validation(유효성검사)
 				if( roomcode==''|| howmany=="" || person=="" || checkin==""|| checkout==""|| mobile=="" || name=="")
@@ -201,14 +213,14 @@ $(document)
 				  } else{
 				$.post('http://localhost:8080/app/addBooking',
 		 				{roomcode:roomcode,person:person,checkin:checkin
-					     ,checkout:checkout,name:name,mobile:mobile}, 
+					     ,checkout:checkout,name:name,mobile:mobile,total:total}, 
 						function(result){
 							if(result=='ok'){
 								pstr='<option value="'+$('#roomcode').val()+'">'+
-								$('#roomName').val()+','+$('#selType2').text()+','+
+								$('#roomName').val()+','+$('#selType2 option:selected').text()+','+
 								$('#stayPerson').val()+'/'+$('#maxPerson').val()+','+
 								$('#checkin').val()+'~'+$('#checkout').val()+','+
-								$('#reserv_name').val()+','+$('#phonenum').val()+'</option>';
+								$('#reserv_name').val()+','+$('#phonenum').val()+','+$('#total').val()+'</option>';
 							$('#reservList').append(pstr);
 							$('#clear').trigger('click');//입력란 비우기
 							$('#selType2 option:selected').remove();//roomlist에서 제거
