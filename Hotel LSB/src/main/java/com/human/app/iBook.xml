@@ -9,11 +9,19 @@
 		insert into booking(bookcode,person,checkin,checkout,name,mobile,roomcode,total)
 		values(seq_booking.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7})
 	</insert> 
- 	<select id="getReserveList" resultType="com.human.app.Bookinfo">
-	 	select a.bookcode,b.roomname,b.roomtype,b.howmany max_howmany,a.howmany person,a.checkin,a.checkout,total,name,mobile
-	 	from book a, room b
+ 	<select id="getBookedList" resultType="com.human.app.Bookinfo">
+	 	select a.bookcode,b.roomname,b.roomtype,b.howmany max_howmany,a.person,a.checkin,a.checkout,total,a.name,mobile
+	 	from booking a, room b
 	 	<![CDATA[where a.checkout > #{param1} and a.checkin < #{param2}]]>
 	 	 and a.roomcode=b.roomcode
 	 	 order by a.checkin
 	</select> 
+<!-- 	<select id="getBookList" resultType="com.human.app.Bookinfo">
+		select * from room
+		where roomcode in(
+		select roomcode from room
+		minus
+		select distinct roomcode from book where checkout >#{param1} and checkin
+		)
+	</select> -->
 </mapper>

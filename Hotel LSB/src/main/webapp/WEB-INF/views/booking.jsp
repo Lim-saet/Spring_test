@@ -62,7 +62,7 @@
            			<option value='3'>Double Room</option>
            			<option value='4'>Single Room</option>
            </select>
-                <input type="button" value="찾기" id="find">
+                <input type="button" value="찾기" id="btnfind">
             </td>
             </tr>
          </div>
@@ -242,6 +242,16 @@ $(document)
   			$('#checkin').val(ch_in);
   			$('#checkout').val(ch_out);
   		})
-  		
+ 		.on('click','#btnfind',function(){
+ 				$.post("http://localhost:8080/app/getBookedList",{checkin:$('#checkin1').val(),checkout:$('#checkout1').val()},function(result)
+ 				{
+ 					$.each(result,function(ndx,value){
+ 						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['roomtype']+','+value['person']+
+ 						'/'+value['max_howmany']+','+value['checkin']+','+value['checkout']+','+value['total']+','+value['name']+','
+ 						+value['mobile']+'</option>';
+ 						$('#reservList').append(str);
+ 					})
+ 				},'json');
+ 			})
 </script>
 </html>
