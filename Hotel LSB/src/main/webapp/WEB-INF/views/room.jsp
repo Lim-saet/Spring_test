@@ -114,6 +114,7 @@
 			 $('#onedaypri').val(arr[3]); 
 			 
 			 let code=$(this).val();
+			 console.log(code); //확인해보러 가좌
 			 $('#roomcode').val(code);
 			 
 			 return false;
@@ -135,7 +136,7 @@
 					},'json');
 		})
 		
-		.on('click','#delete',function(){ //찾음 딜리트가 저기 등록까지 감싸버리는데 자 봐봐 함 해보자!
+		.on('click','#delete',function(){
 			$.post('http://localhost:8080/app/deleteRoom',{roomcode:$('#roomcode').val()},
 					function(result){ 
 				console.log(result);

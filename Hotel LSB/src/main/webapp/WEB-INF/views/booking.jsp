@@ -50,7 +50,7 @@
          <div class= d_rcategory>
                 <tr>
                     <th>숙박기간</th>
-                    <td><input type="date" id=month> ~ <input type="date" id=month><br><br></td> 
+                    <td><input type="date" id=checkin1> ~ <input type="date" id=checkout1><br><br></td> 
                 </tr>
                 <tr>
                     <th>객실분류</th>
@@ -78,6 +78,7 @@
             				</option> 
             			</c:forEach>--%>
             		</select>
+            		
                     </td></tr>          
                        </table>
             
@@ -89,7 +90,7 @@
              <br>
             객실이름 
             <input type="text" id=roomName><pre></pre>
-         	<input type=value id=roomcode>
+         	<input type=hidden id=roomcode>
            방 종류
 			<select size=5 style='width:120px;' id=selType2>
            		<c:forEach items="${type}" var="room">
@@ -101,14 +102,13 @@
             최대인원 
             <input type="text" id=maxPerson><pre></pre>
             숙박기간 
-            <input type="date" id=month1> ~ <input type="date" id=month2><br><br>
-             
-           예약자명 
-            <input type="text" id=reserv_name><pre></pre>
+            <input type="date" id=checkin> ~ <input type="date" id=checkout><br><br>     
 <!--  1박비용
             <input type="text" id=onedaypri><pre></pre>-->
             총 숙박비
-            <input type="text" id=total><pre></pre> 
+            <input type="text" id=total><pre></pre>
+            예약자명 
+            <input type="text" id=reserv_name><pre></pre> 
             예약자모바일
             <input type=text id=phonenum><pre></pre>
             <input type=button id=ok_reserv value="   예약완료   ">&nbsp;&nbsp;&nbsp;   
@@ -119,10 +119,12 @@
          </div>
         <div class=already>
             <span style="font-size: 20px;">예약된 객실</span><br>
-            <table border="1" bordercolor="black" width="150" height="200" id=reserv_wan>
+            <table border="1" bordercolor="black" width="300" height="200" id=reserv_wan>
          <tr>
          	<td align="middle">
-         		//
+         		<select size=10 style='width:500px;' id=reservList>
+         			
+         		</select>
          	</td>
          </tr>
 
@@ -135,62 +137,99 @@
 <script src= 'http://code.jquery.com/jquery-3.6.0.js'></script>
 <script>
 $(document)
-	.ready(function(){
-		
-			$.post("http://localhost:8080/app/getRoomList2",{},function(result){
+.ready(function(){
+			$.post("http://localhost:8080/app/getRoomList",{},function(result){
 					console.log(result);
 					$.each(result,function(ndx,value){
-						str='<option value="'+value['roomcode']+'">'
-							+value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
+						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+
+							value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
 							$('#seltype').append(str);
 					})
 					},'json');
 			
-			$("#seltype").change(function(){
-				
-				 var arr = $('#seltype option:selected').text().split(",");
-				 
-				 var trimArr1=arr[0].trim(); 
-					 
-				 $('#roomName').val(trimArr1);
-				 	 
-				 $('#maxPerson').val(arr[1]); 
-					
-				 $('#selType2 option:contains("'+arr[0]+'")').prop("selected",true);
-			
-				 let code=$(this).val();
-				 $('#roomcode').val(code);
-				
-				 return false;
 		})
+.ready(function(){
+		$("#seltype").change(function(){
+			
+			 var arr = $('#seltype option:selected').text().split(",");
+			 
+			 var trimArr1=arr[0].trim(); 
+				 
+			 $('#roomName').val(trimArr1);
+			 //console.log(arr[0]);
+
+			 $('#selType2 option:contains("'+arr[1]+'")').prop("selected",true);
+			 if($('#selType2 option:selected')){
+			 	let start=$('#checkin').val();
+	  			let end=$('#checkout').val();
+	  			
+	  			var ar1=start.split('-');
+	  			var ar2=end.split('-');
+	  			
+	  			var da1= new Date(ar1[0], ar1[1], ar1[2]);
+	  			var da2= new Date(ar2[0], ar2[1], ar2[2]);
+	  			var dif= da2-da1;
+	  			var c_day=24*60*60*1000;
+	  			
+	  			$('#total').val(parseInt(dif/c_day)*arr[3]);
+	  			}
+			 
+			 $('#maxPerson').val(arr[2]); 
+			 
+			 let code=$(this).val();//이거아닌가열 // 오 맞네 this consoloe.log(code);
+			 $('#roomcode').val(code); 
+			 
+			 return false;
 	})
+  })
+
 $(document)
 		 	.on('click','#ok_reserv',function(){
-		 		let roomname=$('#roomName').val();
-				let roomtype=$('#selType2').val();
-				let howmany=$('#stayperson').val();
-				let max_person=$('#maxPerson').val();
-				let checkin=$('#month1').val();
-				let checkout=$('#month2').val();
+		 		let roomcode=$('#roomcode').val();
+				let howmany=$('#stayPerson').val();
+				let person=$('#maxPerson').val();
+				let checkin=$('#checkin').val();
+				let checkout=$('#checkout').val();
 				let mobile=$('#phonenum').val();
-				let bname=$('#reserv_name').val();
-				let total=$('#total').val();
+				let name=$('#reserv_name').val();
+				
 				//validation(유효성검사)
-				if(roomname=='' || roomtype=='' || howmany=="" || max_person=="" || checkin==""|| checkout==""|| mobile=="" || reserv_name=="" || total=="")
+				if( roomcode==''|| howmany=="" || person=="" || checkin==""|| checkout==""|| mobile=="" || name=="")
 				{
 					alert('누락된 값이 있습니다.');
 					return false;
-				  }
+				  } else{
 				$.post('http://localhost:8080/app/addBooking',
-		 				{max_person:max_person,checkin:checkin
-					     ,checkout:checkout,bname:bname,mobile:mobile}, 
+		 				{roomcode:roomcode,person:person,checkin:checkin
+					     ,checkout:checkout,name:name,mobile:mobile}, 
 						function(result){
-					if(result=='ok'){
-						location.reload();
+							if(result=='ok'){
+								pstr='<option value="'+$('#roomcode').val()+'">'+
+								$('#roomName').val()+','+$('#selType2').text()+','+
+								$('#stayPerson').val()+'/'+$('#maxPerson').val()+','+
+								$('#checkin').val()+'~'+$('#checkout').val()+','+
+								$('#reserv_name').val()+','+$('#phonenum').val()+'</option>';
+							$('#reservList').append(pstr);
+							$('#clear').trigger('click');//입력란 비우기
+							$('#selType2 option:selected').remove();//roomlist에서 제거
+							//location.reload();		
 					} 
 				},'text');
-						
-		 	})
-
+				
+		 	}
+					
+		 })
+$(document)
+  		.on('click','#clear',function(){
+  			$('#roomName,#selType2,#checkin,#checkout,#stayPerson,#maxPerson,#total,#reserv_name,#phonenum').val('');
+  			return false;
+  		})
+  		.on('change','#checkin1,#checkout1',function(){
+  			let ch_in=$('#checkin1').val();
+  			let ch_out=$('#checkout1').val();
+  			$('#checkin').val(ch_in);
+  			$('#checkout').val(ch_out);
+  		})
+  		
 </script>
 </html>

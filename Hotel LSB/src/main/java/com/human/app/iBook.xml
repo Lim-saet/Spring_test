@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<!-- namespace="인터페이스의 경로명+이름" -->
+<mapper namespace="com.human.app.iBook">
+	<insert id="doAddBooking">
+		insert into booking(bookcode,person,checkin,checkout,name,mobile,roomcode)
+		values(seq_booking.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
+	</insert> 
+<!-- 	<select id="getReserveList" resultType="com.human.app.Bookinfo">
+	 	select a.name roomname, c.type typename, b.person, a.howmany,b.checkin,b.checkout,b.mobile,b.name presonname
+	 	from room a, booking b, roomtype c
+	 	where a.roomcode=b.roomcode, a.type=c.typecode;
+	</select> -->
+</mapper>

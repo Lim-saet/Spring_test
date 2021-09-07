@@ -164,6 +164,24 @@ public class HomeController {
 			iRoom room=sqlSession.getMapper(iRoom.class);
 			room.doAddRoom(rname,rtype,howmany,howmuch);
 			return "ok";
+   }
+   
+   @RequestMapping(value="/addBooking",method=RequestMethod.POST,
+  			produces = "application/text; charset=utf8")
+	@ResponseBody
+		public String addBooking(HttpServletRequest hsr) {
+	   System.out.println("can");
+			int person=Integer.parseInt(hsr.getParameter("person"));
+			String checkin=hsr.getParameter("checkin");
+			 System.out.println("checkin ["+checkin+"]");
+			String checkout=hsr.getParameter("checkout");
+			String name=hsr.getParameter("name");
+			String mobile=hsr.getParameter("mobile");
+			int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
+			
+			iBook book=sqlSession.getMapper(iBook.class);
+			book.doAddBooking(person,checkin,checkout,name,mobile,roomcode);
+			return "ok";
 	}
    
    @RequestMapping(value="/updateRoom",method=RequestMethod.POST,
@@ -229,43 +247,43 @@ public class HomeController {
 		 * }
 		 */
 	
-	   @RequestMapping(value="/getRoomList2",method=RequestMethod.POST,
-					produces = "application/text; charset=utf8")
-	   @ResponseBody
-	   		public String getRoomList2(HttpServletRequest hsr) {
-		   		iRoom room=sqlSession.getMapper(iRoom.class);
-		   		ArrayList<Roominfo> roominfo=room.getRoomList2();
-				   	 JSONArray ja= new JSONArray();
-			    	  for(int i=0;i<roominfo.size();i++) {
-			    		  JSONObject jo = new JSONObject();
-			    		  jo.put("typename", roominfo.get(i).getTypename());
-			    		  jo.put("howmany", roominfo.get(i).getHowmany());
-			    		  jo.put("howmuch", roominfo.get(i).getHowmuch());
-			    		  jo.put("roomcode", roominfo.get(i).getRoomcode());
-			    		  ja.add(jo);
-	    	  }
-			  System.out.println(ja.toString());
-			  return ja.toString();
-	   }
+//	   @RequestMapping(value="/getRoomList2",method=RequestMethod.POST,
+//					produces = "application/text; charset=utf8")
+//	   @ResponseBody
+//	   		public String getRoomList2(HttpServletRequest hsr) {
+//		   		iRoom room=sqlSession.getMapper(iRoom.class);
+//		   		ArrayList<Roominfo> roominfo=room.getRoomList2();
+//				   	 JSONArray ja= new JSONArray();
+//			    	  for(int i=0;i<roominfo.size();i++) {
+//			    		  JSONObject jo = new JSONObject();
+//			    		  jo.put("typename", roominfo.get(i).getTypename());
+//			    		  jo.put("howmany", roominfo.get(i).getHowmany());
+//			    		  jo.put("howmuch", roominfo.get(i).getHowmuch());
+//			    		  jo.put("roomcode", roominfo.get(i).getRoomcode());
+//			    		  ja.add(jo);
+//	    	  }
+//			  System.out.println(ja.toString());
+//			  return ja.toString();
+//	   }
 	   
-	  @RequestMapping(value="/addBooking",method=RequestMethod.POST,
-				produces = "application/text; charset=utf8")
-	   @ResponseBody
-		public String addBooking(HttpServletRequest hsr) {
-		  	//System.out.println("can");
-		  
-		   String bname=hsr.getParameter("name");
-		   System.out.println("name ["+bname+"]");
-		   	
-		  	int max_person=Integer.parseInt(hsr.getParameter("person"));
-		  	int checkin=Integer.parseInt(hsr.getParameter("checkin"));
-		  	int checkout=Integer.parseInt(hsr.getParameter("checkout"));
-			
-			int mobile=Integer.parseInt(hsr.getParameter("mobile"));
-			iRoom room=sqlSession.getMapper(iRoom.class);
-			room.doAddBooking(max_person,checkin,checkout,bname,mobile);
-			return "ok";
-	}
+//	  @RequestMapping(value="/addBooking",method=RequestMethod.POST,
+//				produces = "application/text; charset=utf8")
+//	   @ResponseBody
+//		public String addBooking(HttpServletRequest hsr) {
+//		  	//System.out.println("can");
+//		  
+//		   String bname=hsr.getParameter("name");
+//		   System.out.println("name ["+bname+"]");
+//		   	
+//		  	int max_person=Integer.parseInt(hsr.getParameter("person"));
+//		  	int checkin=Integer.parseInt(hsr.getParameter("checkin"));
+//		  	int checkout=Integer.parseInt(hsr.getParameter("checkout"));
+//			
+//			int mobile=Integer.parseInt(hsr.getParameter("mobile"));
+//			iBook book=sqlSession.getMapper(iBook.class);
+//			book.doAddBooking(max_person,checkin,checkout,bname,mobile);
+//			return "ok";
+//	}
 	
 	@RequestMapping("/logout")
 	   public String logout(HttpServletRequest hsr) {
