@@ -56,7 +56,6 @@
                     <th>객실분류</th>
                        <td> 
                          <select size=1 style='width:120px;' id=selType1>
-           			<option value='-'>전체</option>
            			<option value='1'>Suite Room</option>
            			<option value='2'>Family Room</option>
            			<option value='3'>Double Room</option>
@@ -102,9 +101,9 @@
            		</c:forEach>
            </select><pre></pre>
             숙박인원 
-            <input type="text" id=stayPerson><pre></pre>
+            <input type="text" id=stayPerson ><pre></pre>
             최대인원 
-            <input type="text" id=maxPerson><pre></pre>
+            <input type="text" id="maxPerson" readonly><pre></pre>
             숙박기간 
             <input type="date" id=checkin> ~ <input type="date" id=checkout><br><br>     
 <!--  1박비용
@@ -141,17 +140,6 @@
 <script src= 'http://code.jquery.com/jquery-3.6.0.js'></script>
 <script>
 $(document)
-.ready(function(){
-			$.post("http://localhost:8080/app/getRoomList",{},function(result){
-					console.log(result);
-					$.each(result,function(ndx,value){
-						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+
-							value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
-							$('#seltype').append(str);
-					})
-					},'json');
-			
-		})
 .ready(function(){
 		$("#seltype").change(function(){
 				if($('#checkin').val()==''){
@@ -241,17 +229,37 @@ $(document)
   			let ch_out=$('#checkout1').val();
   			$('#checkin').val(ch_in);
   			$('#checkout').val(ch_out);
+  			
   		})
  		.on('click','#btnfind',function(){
+ 			if($('#checkin1').val()>$('#checkout1').val()){//왜 체크인날짜 정할때부터 alert뜨지;;
+  				alert('체크인날짜가 체크아웃날짜를보다 앞에 있을 수 없습니다.');
+  				return false;
+  			}
+ 			if($('#checkin1').val()=='' || $('#checkout1').val()==''){
+ 				alert('날짜를 선택해주세요.');
+ 				return false;
+ 			}
  				$.post("http://localhost:8080/app/getBookedList",{checkin:$('#checkin1').val(),checkout:$('#checkout1').val()},function(result)
  				{
+ 					$('#reservList').empty();
  					$.each(result,function(ndx,value){
- 						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['roomtype']+','+value['person']+
+ 						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['person']+
  						'/'+value['max_howmany']+','+value['checkin']+','+value['checkout']+','+value['total']+','+value['name']+','
  						+value['mobile']+'</option>';
  						$('#reservList').append(str);
  					})
  				},'json');
+ 				
+ 				$.post("http://localhost:8080/app/getBookList",{checkin:$('#checkin1').val(),checkout:$('#checkout1').val(),typecode:$('#selType1 option:selected').val()},function(result){
+					//console.log(result);
+					$('#seltype').empty();
+					$.each(result,function(ndx,value){
+						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+
+							value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
+							$('#seltype').append(str);
+					})
+					},'json');
  			})
 </script>
 </html>

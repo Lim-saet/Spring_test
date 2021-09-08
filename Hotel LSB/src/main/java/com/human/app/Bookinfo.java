@@ -7,25 +7,34 @@ public class Bookinfo {
 	private int total;
 	private int bookcode;
 	private int person;
+	private String typename;
 	private String checkin;
 	private String checkout;
 	private String name;
 	private String mobile;
 	private int roomcode;
+	private int howmany;
+	private int howmuch;
+	private int typecode;
 	public Bookinfo() {}
-	public Bookinfo(String roomname, int roomtype, int max_howmany, int total, int bookcode, int person, String checkin,
-			String checkout, String name, String mobile, int roomcode) {
+	public Bookinfo(String roomname, int roomtype, int max_howmany, int total, int bookcode, int person,
+			String typename, String checkin, String checkout, String name, String mobile, int roomcode, int howmany,
+			int howmuch, int typecode) {
 		this.roomname = roomname;
 		this.roomtype = roomtype;
 		this.max_howmany = max_howmany;
 		this.total = total;
 		this.bookcode = bookcode;
 		this.person = person;
+		this.typename = typename;
 		this.checkin = checkin;
 		this.checkout = checkout;
 		this.name = name;
 		this.mobile = mobile;
 		this.roomcode = roomcode;
+		this.howmany = howmany;
+		this.howmuch = howmuch;
+		this.typecode = typecode;
 	}
 	public String getRoomname() {
 		return roomname;
@@ -63,6 +72,12 @@ public class Bookinfo {
 	public void setPerson(int person) {
 		this.person = person;
 	}
+	public String getTypename() {
+		return typename;
+	}
+	public void setTypename(String typename) {
+		this.typename = typename;
+	}
 	public String getCheckin() {
 		return checkin;
 	}
@@ -93,4 +108,25 @@ public class Bookinfo {
 	public void setRoomcode(int roomcode) {
 		this.roomcode = roomcode;
 	}
+	public int getHowmany() {
+		return howmany;
+	}
+	public void setHowmany(int howmany) {
+		this.howmany = howmany;
+	}
+	public int getHowmuch() {
+		return howmuch;
+	}
+	public void setHowmuch(int howmuch) {
+		this.howmuch = howmuch;
+	}
+	public int getTypecode() {
+		return typecode;
+	}
+	public void setTypecode(int typecode) {
+		this.typecode = typecode;
+	}
+	
+	
 }
+	

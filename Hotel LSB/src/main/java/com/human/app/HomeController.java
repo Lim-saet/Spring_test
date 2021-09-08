@@ -189,20 +189,18 @@ public class HomeController {
  			produces = "application/text; charset=utf8")
    @ResponseBody 
    		public String getBookedList(HttpServletRequest hsr) {
+	   iBook book=sqlSession.getMapper(iBook.class);
+	   
 	   		String checkin=hsr.getParameter("checkin");
 	   		String checkout=hsr.getParameter("checkout");
-	   		
-	   		iBook book=sqlSession.getMapper(iBook.class);
-	   		book.getBookedList(checkin,checkout);
-	   		
-	   		ArrayList<Bookinfo> bookinfo=book.getBookedList();
+
+	   		ArrayList<Bookinfo> bookinfo=book.getBookedList(checkin,checkout);
 	   		//찾아진 데이터로 JSON Array 만들기
 	   		JSONArray ja=new JSONArray();
 	   		for(int i=0;i<bookinfo.size();i++) {
 	   			JSONObject jo = new JSONObject();
-	   			jo.put("roomname", bookinfo.get(i).getRoomcode());
+	   			jo.put("roomname", bookinfo.get(i).getRoomname());
 	   			jo.put("bookcode", bookinfo.get(i).getBookcode());
-	   			jo.put("roomtype", bookinfo.get(i).getRoomtype());
 	   			jo.put("max_howmany", bookinfo.get(i).getMax_howmany());
 	   			jo.put("person", bookinfo.get(i).getPerson());
 	   			jo.put("checkin", bookinfo.get(i).getCheckin());
@@ -210,11 +208,39 @@ public class HomeController {
 	   			jo.put("total", bookinfo.get(i).getTotal());
 	   			jo.put("name", bookinfo.get(i).getName());
 	   			jo.put("mobile", bookinfo.get(i).getMobile());
+	   			jo.put("roomcode", bookinfo.get(i).getRoomcode());
+	   			jo.put("typename", bookinfo.get(i).getTypename());
 	   			ja.add(jo);
 	   		}
 	   		System.out.println(ja.toString());
 	   		return ja.toString();
    }
+   
+	
+	  @RequestMapping(value="/getBookList",method=RequestMethod.POST, produces =
+	  "application/text; charset=utf8")
+	  
+	  @ResponseBody public String getBookList(HttpServletRequest hsr) { 
+		  iBook book=sqlSession.getMapper(iBook.class); 
+		  String checkin=hsr.getParameter("checkin"); 
+		  String checkout=hsr.getParameter("checkout");
+		  int typecode=Integer.parseInt(hsr.getParameter("typecode"));
+		  
+	  ArrayList<Bookinfo> bookinfo=book.getBookList(checkin,checkout,typecode); 
+	  		JSONArray ja=new JSONArray();
+	  		for(int i=0;i<bookinfo.size();i++) { 
+	  			JSONObject jo = new JSONObject();
+	  			jo.put("roomcode", bookinfo.get(i).getRoomcode()); 
+	  			jo.put("roomname",bookinfo.get(i).getRoomname()); 
+	  			jo.put("typename",bookinfo.get(i).getTypename()); 
+	  			jo.put("howmany",bookinfo.get(i).getHowmany()); 
+	  			jo.put("howmuch",bookinfo.get(i).getHowmuch());
+	  			ja.add(jo);
+	  		} 
+	  		return ja.toString();
+	  }
+	 
+  
    
    @RequestMapping(value="/updateRoom",method=RequestMethod.POST,
   			produces = "application/text; charset=utf8")
