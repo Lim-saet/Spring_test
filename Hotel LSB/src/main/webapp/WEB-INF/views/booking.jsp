@@ -92,10 +92,10 @@
              <tr><td align="middle">
              <br>
             객실이름 
-            <input type="text" id=roomName><pre></pre>
-         	<input type=hidden id=roomcode>
+            <input type="text" id="roomName" readonly><pre></pre>
+         	<input type=value id=roomcode>
            방 종류
-			<select size=5 style='width:120px;' id=selType2>
+			<select size=4 style='width:110px;' id="selType2">
            		<c:forEach items="${type}" var="room">
            			<option value='${room.typecode}'>${room.name}</option>
            		</c:forEach>
@@ -106,10 +106,9 @@
             <input type="text" id="maxPerson" readonly><pre></pre>
             숙박기간 
             <input type="date" id=checkin> ~ <input type="date" id=checkout><br><br>     
-<!--  1박비용
-            <input type="text" id=onedaypri><pre></pre>-->
+
             총 숙박비
-            <input type="text" id=total><pre></pre>
+            <input type="text" id="total" readonly><pre></pre>
             예약자명 
             <input type="text" id=reserv_name><pre></pre> 
             예약자모바일
@@ -124,7 +123,7 @@
             <span style="font-size: 20px;">예약된 객실</span><br>
             <table border="1" bordercolor="black" width="300" height="200" id=reserv_wan>
          <tr>
-         	<td align="middle">
+         	<td align="middle"><input type=value id=roomcode1>
          		<select size=10 style='width:600px;' id=reservList>
          			
          		</select>
@@ -141,6 +140,7 @@
 <script>
 $(document)
 .ready(function(){
+
 		$("#seltype").change(function(){
 				if($('#checkin').val()==''){
 					alert("체크인날짜를 먼저 선택해주세요!");
@@ -166,7 +166,7 @@ $(document)
 	  			
 	  			var da1= new Date(ar1[0], ar1[1]-1, ar1[2]);
 	  			var da2= new Date(ar2[0], ar2[1]-1, ar2[2]);
-	  			console.log(da1);
+	  			//console.log(da1);
 	  			var dif= da2-da1;
 	  			var c_day=24*60*60*1000;
 	  			
@@ -175,7 +175,8 @@ $(document)
 			 
 			 $('#maxPerson').val(arr[2]); 
 			 
-			 let code=$(this).val();//이거아닌가열 // 오 맞네 this consoloe.log(code);
+			 let code=$(this).val();
+			 //console.log(code);
 			 $('#roomcode').val(code); 
 			 
 			 return false;
@@ -212,13 +213,25 @@ $(document)
 							$('#reservList').append(pstr);
 							$('#clear').trigger('click');//입력란 비우기
 							$('#selType2 option:selected').remove();//roomlist에서 제거
+							$('#checkin1,#checkout1').val('');
 							//location.reload();		
 					} 
 				},'text');
 				
 		 	}
-					
+				let roomcode1=$('#roomcode1').val();
+				//console.log(roomcode1);
+			$.post('http://localhost:8080/app/updateBook',
+					{roomcode:roomcode1,checkin:checkin,checkout:checkout,
+					name:name,mobile:mobile,total:total},
+					function(result){
+						if(result=='ok'){
+							location.reload();
+						}
+						
+				},'text');
 		 })
+		 
 $(document)
   		.on('click','#clear',function(){
   			$('#roomName,#selType2,#checkin,#checkout,#stayPerson,#maxPerson,#total,#reserv_name,#phonenum').val('');
@@ -261,5 +274,30 @@ $(document)
 					})
 					},'json');
  			})
+$(document)
+.ready(function(){
+		$("#reservList").change(function(){
+			var arr=$('#reservList option:selected').text().split(",");	
+			var trimArr1=arr[0].trim();
+			var otherAr=arr[2].split("/");
+			
+			$('#roomName').val(trimArr1);
+			$('#selType2 option:contains("'+arr[1]+'")').prop("selected",true);
+			$('#stayPerson').val(otherAr[0]);
+			$('#maxPerson').val(otherAr[1]);
+			$('#checkin').val(arr[3]);
+			$('#checkout').val(arr[4]);
+			$('#total').val(arr[5]);
+			$('#reserv_name').val(arr[6]);
+			$('#phonenum').val(arr[7]);
+			
+			
+			let code=$(this).val();
+			console.log(code);
+			$('#roomcode1').val(code);
+			$('#roomcode').val(code);
+			return false;
+	})
+})
 </script>
 </html>

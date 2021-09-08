@@ -240,8 +240,26 @@ public class HomeController {
 	  		return ja.toString();
 	  }
 	 
-  
-   
+	  @RequestMapping(value="/updateBook",method=RequestMethod.POST, produces =
+			  "application/text; charset=utf8")
+	  @ResponseBody
+	  public String updateBook(HttpServletRequest hsr) {
+		  iBook book=sqlSession.getMapper(iBook.class);
+		  
+		  int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
+		  String checkin=hsr.getParameter("checkin");
+		  String checkout=hsr.getParameter("checkout");
+		  String name=hsr.getParameter("name");
+		  int mobile=Integer.parseInt(hsr.getParameter ("mobile"));
+		  int total=Integer.parseInt(hsr.getParameter("total"));
+		  
+		  book.doUpdateBook(roomcode, checkin, checkout, name, mobile, total);
+		  return"ok";
+		  		
+	  }
+	  
+	  
+	  
    @RequestMapping(value="/updateRoom",method=RequestMethod.POST,
   			produces = "application/text; charset=utf8")
    @ResponseBody

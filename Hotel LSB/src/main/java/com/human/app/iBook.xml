@@ -36,4 +36,8 @@
 		<![CDATA[select distinct roomcode from booking where a.checkout >#{param1} and a.checkin < #{param2}]]>
 		) and a.roomcode=b.roomcode and b.type=c.typecode and c.typecode=#{param3} -->
 	 
+	 <update id="doUpdateBook">
+	 	update booking set bookcode=seq_booking.nextval,checkin={#param2},checkout=#{param3},name={#param4},mobile={#param5},total=#{param6}
+	 	where roomcode=#{param1}
+	 </update>
 </mapper>
