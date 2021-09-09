@@ -24,7 +24,7 @@
         left: 300px;
         bottom: 300px;
         right: 200px;
-        width: 390px;
+        width: 410px;
         height: 430px;
         border: solid 2px black;
     }
@@ -93,9 +93,10 @@
              <br>
             객실이름 
             <input type="text" id="roomName" readonly><pre></pre>
-         	<input type=value id=roomcode>
+         	<input type=hidden id="roomcode">
+         	<input type=hidden id="bookcode">
            방 종류
-			<select size=4 style='width:110px;' id="selType2">
+			<select size=4 style='width:110px;' id="selType2" disabled>
            		<c:forEach items="${type}" var="room">
            			<option value='${room.typecode}'>${room.name}</option>
            		</c:forEach>
@@ -105,7 +106,7 @@
             최대인원 
             <input type="text" id="maxPerson" readonly><pre></pre>
             숙박기간 
-            <input type="date" id=checkin> ~ <input type="date" id=checkout><br><br>     
+            <input type="date" id=checkin disabled> ~ <input type="date" id=checkout disabled><br><br>     
 
             총 숙박비
             <input type="text" id="total" readonly><pre></pre>
@@ -115,7 +116,8 @@
             <input type=text id=phonenum><pre></pre>
             <input type=button id=ok_reserv value="   예약완료   ">&nbsp;&nbsp;&nbsp;   
             <input type=button id=delete value="   삭제   ">&nbsp;&nbsp;&nbsp; 
-            <input type=button id=clear value="   클리어   ">
+            <input type=button id=clear value="   클리어   ">&nbsp;&nbsp;&nbsp; 
+            <input type=button id=update value="   예약수정   ">
             </td></tr>
         </table>
          </div>
@@ -123,7 +125,9 @@
             <span style="font-size: 20px;">예약된 객실</span><br>
             <table border="1" bordercolor="black" width="300" height="200" id=reserv_wan>
          <tr>
-         	<td align="middle"><input type=value id=roomcode1>
+         	<td align="middle">
+         	<input type=hidden id=roomcode1>
+         	<input type=hidden id=bookcode1 >
          		<select size=10 style='width:600px;' id=reservList>
          			
          		</select>
@@ -186,6 +190,7 @@ $(document)
 $(document)
 		 	.on('click','#ok_reserv',function(){
 		 		let roomcode=$('#roomcode').val();
+		 		//console.log(person);
 				let person=$('#stayPerson').val();
 				let howmany=$('#maxPerson').val();
 				let checkin=$('#checkin').val();
@@ -193,45 +198,42 @@ $(document)
 				let mobile=$('#phonenum').val();
 				let name=$('#reserv_name').val();
 				let total=$('#total').val();
+				let bookcode=$('#bookcode').val();
 				
 				//validation(유효성검사)
 				if( roomcode==''|| howmany=="" || person=="" || checkin==""|| checkout==""|| mobile=="" || name=="")
 				{
 					alert('누락된 값이 있습니다.');
 					return false;
-				  } else{
-				$.post('http://localhost:8080/app/addBooking',
-		 				{roomcode:roomcode,person:person,checkin:checkin
-					     ,checkout:checkout,name:name,mobile:mobile,total:total}, 
-						function(result){
-							if(result=='ok'){
-								pstr='<option value="'+$('#roomcode').val()+'">'+
-								$('#roomName').val()+','+$('#selType2 option:selected').text()+','+
-								$('#stayPerson').val()+'/'+$('#maxPerson').val()+','+
-								$('#checkin').val()+'~'+$('#checkout').val()+','+
-								$('#reserv_name').val()+','+$('#phonenum').val()+','+$('#total').val()+'</option>';
-							$('#reservList').append(pstr);
-							$('#clear').trigger('click');//입력란 비우기
-							$('#selType2 option:selected').remove();//roomlist에서 제거
-							$('#checkin1,#checkout1').val('');
+				  } else if($('#stayPerson').val()>$('#maxPerson').val()) {
+					 alert("인원수를 확인해주십시오");
+					 return false;
+				  }
+					else{
+						if(bookcode==''){
+							$.post('http://localhost:8080/app/addBooking',
+		 					{roomcode:roomcode,person:person,checkin:checkin
+					     	,checkout:checkout,total:total,name:name,mobile:mobile}, 
+					    	 function(result){
+								if(result=='ok'){
+									//let code=$('#roomcode').val();
+									pstr='<option value="'+$('#roomcode').val()+'">'+
+									$('#roomName').val()+','+$('#selType2 option:selected').text()+','+
+									$('#stayPerson').val()+','+$('#maxPerson').val()+','+
+									$('#checkin').val()+','+$('#checkout').val()+','+
+									$('#reserv_name').val()+','+$('#phonenum').val()+','+$('#total').val()+'</option>';
+									$('#reservList').append(pstr);
+								
+									$('#clear').trigger('click');//입력란 비우기
+									$('#selType2 option:selected').remove();//roomlist에서 제거
+									$('#checkin1,#checkout1').val('');
+								}
 							//location.reload();		
-					} 
-				},'text');
-				
-		 	}
-				let roomcode1=$('#roomcode1').val();
-				//console.log(roomcode1);
-			$.post('http://localhost:8080/app/updateBook',
-					{roomcode:roomcode1,checkin:checkin,checkout:checkout,
-					name:name,mobile:mobile,total:total},
-					function(result){
-						if(result=='ok'){
-							location.reload();
-						}
-						
-				},'text');
-		 })
-		 
+		       				},'text');
+					     }
+	 		}				     
+ })
+		
 $(document)
   		.on('click','#clear',function(){
   			$('#roomName,#selType2,#checkin,#checkout,#stayPerson,#maxPerson,#total,#reserv_name,#phonenum').val('');
@@ -258,8 +260,8 @@ $(document)
  					$('#reservList').empty();
  					$.each(result,function(ndx,value){
  						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['person']+
- 						'/'+value['max_howmany']+','+value['checkin']+','+value['checkout']+','+value['total']+','+value['name']+','
- 						+value['mobile']+'</option>';
+ 						','+value['max_howmany']+','+value['checkin']+','+value['checkout']+','+value['total']+','+value['name']+','
+ 						+value['mobile']+','+value['bookcode']+'</option>';
  						$('#reservList').append(str);
  					})
  				},'json');
@@ -272,30 +274,63 @@ $(document)
 							value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
 							$('#seltype').append(str);
 					})
-					},'json');
+					},'json');	
  			})
+ 			.on('click','#update',function(){
+ 				let roomcode=$('#roomcode').val();
+ 				//console.log(person);
+				let person=$('#stayPerson').val();
+				let checkin=$('#checkin').val();
+				let checkout=$('#checkout').val();
+				let mobile=$('#phonenum').val();
+				let name=$('#reserv_name').val();
+				let total=$('#total').val();
+				let bookcode=$('#bookcode').val();
+				
+ 				$.post('http://localhost:8080/app/updateBook',
+						{bookcode:bookcode,roomcode:roomcode,checkin:checkin,checkout:checkout,total:total,
+			    		 name:name,mobile:mobile,person:person},
+			    		 //console.log(roomcode)
+							function(result){
+								if(result=='ok'){
+								location.reload();
+								}
+					
+							},'text');
+ 			})
+ 			.on('click','#delete',function(){
+			$.post('http://localhost:8080/app/deleteBook',{bookcode:$('#bookcode').val()},
+					function(result){ 
+				console.log(result);
+				if(result=='ok'){
+					$('#clear').trigger('click');//입력란 비우기
+					$('#reservList option:selected').remove();//roomlist에서 제거
+				}
+			},'text');
+		})
+		
 $(document)
 .ready(function(){
 		$("#reservList").change(function(){
 			var arr=$('#reservList option:selected').text().split(",");	
 			var trimArr1=arr[0].trim();
-			var otherAr=arr[2].split("/");
+			//var otherAr=arr[2].split("/");
+			console.log(arr);
 			
 			$('#roomName').val(trimArr1);
+			let code=$('#reservList option:selected').val();
+			
 			$('#selType2 option:contains("'+arr[1]+'")').prop("selected",true);
-			$('#stayPerson').val(otherAr[0]);
-			$('#maxPerson').val(otherAr[1]);
-			$('#checkin').val(arr[3]);
-			$('#checkout').val(arr[4]);
-			$('#total').val(arr[5]);
-			$('#reserv_name').val(arr[6]);
-			$('#phonenum').val(arr[7]);
-			
-			
-			let code=$(this).val();
-			console.log(code);
-			$('#roomcode1').val(code);
+			$('#stayPerson').val(arr[2]);
+			$('#maxPerson').val(arr[3]);
+			$('#checkin').val(arr[4]);
+			$('#checkout').val(arr[5]);
+			$('#total').val(arr[6]);	
+			$('#reserv_name').val(arr[7]);
+			$('#phonenum').val(arr[8]);
+			$('#bookcode').val(arr[9]);
 			$('#roomcode').val(code);
+			 
 			return false;
 	})
 })

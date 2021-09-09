@@ -6,13 +6,13 @@
 	<!-- namespace="인터페이스의 경로명+이름" -->
 <mapper namespace="com.human.app.iBook">
 	<insert id="doAddBooking">
-		insert into booking(bookcode,person,checkin,checkout,name,mobile,roomcode,total)
+		insert into booking1(bookcode,person,checkin,checkout,name,mobile,roomcode,total)
 		values(seq_booking.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7})
 	</insert> 
  	<select id="getBookedList" resultType="com.human.app.Bookinfo">
-	 	select a.bookcode,b.name roomname,c.name typename,b.howmany max_howmany,a.person,a.checkin,a.checkout,total,a.name,mobile
-	 	from booking a, room b , roomtype c
-	 	<![CDATA[where a.checkout > #{param1} and a.checkin < #{param2}]]>
+	 	select a.bookcode,b.name roomname,c.name typename,b.howmany max_howmany,a.person,checkin,checkout,total,a.name,mobile,a.roomcode
+	 	from booking1 a, room b , roomtype c
+	 	<![CDATA[where checkout > #{param1} and checkin < #{param2}]]>
 	 	 and a.roomcode=b.roomcode and b.type=c.typecode
 	 	 order by a.checkin
 	</select> 
@@ -24,7 +24,7 @@
       where type=#{param3} and roomcode not in(
       select roomcode from room
       INTERSECT
-      select roomcode from booking where (checkin between #{param1} and to_date(#{param2})-1) 
+      select roomcode from booking1 where (checkin between #{param1} and to_date(#{param2})-1) 
       or (checkout between to_date(#{param1})+1 and to_date(#{param2})) or <![CDATA[(checkin<#{param1} and checkout>to_date(#{param2})-1))]]> 
 	</select>
 	
@@ -37,7 +37,11 @@
 		) and a.roomcode=b.roomcode and b.type=c.typecode and c.typecode=#{param3} -->
 	 
 	 <update id="doUpdateBook">
-	 	update booking set bookcode=seq_booking.nextval,checkin={#param2},checkout=#{param3},name={#param4},mobile={#param5},total=#{param6}
-	 	where roomcode=#{param1}
+	 	update booking1 set name=#{param2},mobile=#{param3},person=#{param4}
+	 	where bookcode=#{param1}
 	 </update>
+	 
+	 <delete id="doDeleteBook">
+	 	delete from booking1 where bookcode=#{param1}
+	 </delete>
 </mapper>

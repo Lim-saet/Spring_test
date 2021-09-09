@@ -153,6 +153,16 @@ public class HomeController {
 	   return "ok";
    }
    
+   @RequestMapping(value="/deleteBook",method=RequestMethod.POST, produces =
+			  "application/text; charset=utf8")
+   @ResponseBody
+   public String deleteBook(HttpServletRequest hsr) {
+	   int bookcode=Integer.parseInt(hsr.getParameter("bookcode"));
+	   iBook book=sqlSession.getMapper(iBook.class);
+	   book.doDeleteBook(bookcode);
+	   return "ok";
+   }
+   
    @RequestMapping(value="/addRoom",method=RequestMethod.POST,
    			produces = "application/text; charset=utf8")
 	@ResponseBody
@@ -246,14 +256,13 @@ public class HomeController {
 	  public String updateBook(HttpServletRequest hsr) {
 		  iBook book=sqlSession.getMapper(iBook.class);
 		  
-		  int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
-		  String checkin=hsr.getParameter("checkin");
-		  String checkout=hsr.getParameter("checkout");
+		  int person=Integer.parseInt(hsr.getParameter("person"));
+		  int bookcode=Integer.parseInt(hsr.getParameter("bookcode"));
 		  String name=hsr.getParameter("name");
-		  int mobile=Integer.parseInt(hsr.getParameter ("mobile"));
-		  int total=Integer.parseInt(hsr.getParameter("total"));
+		  String mobile=hsr.getParameter("mobile");
+		 
 		  
-		  book.doUpdateBook(roomcode, checkin, checkout, name, mobile, total);
+		  book.doUpdateBook(bookcode, name, mobile, person);
 		  return"ok";
 		  		
 	  }
