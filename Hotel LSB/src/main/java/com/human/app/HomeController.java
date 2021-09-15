@@ -78,6 +78,10 @@ public class HomeController {
 	   public String newbie() {
 	      return "newbie";
 	   }
+	   @RequestMapping("/recheck_login")
+	   public String recheck_login() {
+	      return "recheck_login";
+	   }
 
 	   @RequestMapping("/room")
 	   public String room(HttpServletRequest hsr,Model model) {
@@ -150,6 +154,16 @@ public class HomeController {
 	   int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
 	   iRoom room=sqlSession.getMapper(iRoom.class);
 	   room.doDeleteRoom(roomcode);
+	   return "ok";
+   }
+   
+   @RequestMapping(value="/deleteBook",method=RequestMethod.POST, produces =
+			  "application/text; charset=utf8")
+   @ResponseBody
+   public String deleteBook(HttpServletRequest hsr) {
+	   int bookcode=Integer.parseInt(hsr.getParameter("bookcode"));
+	   iBook book=sqlSession.getMapper(iBook.class);
+	   book.doDeleteBook(bookcode);
 	   return "ok";
    }
    
@@ -246,14 +260,13 @@ public class HomeController {
 	  public String updateBook(HttpServletRequest hsr) {
 		  iBook book=sqlSession.getMapper(iBook.class);
 		  
-		  int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
-		  String checkin=hsr.getParameter("checkin");
-		  String checkout=hsr.getParameter("checkout");
+		  int person=Integer.parseInt(hsr.getParameter("person"));
+		  int bookcode=Integer.parseInt(hsr.getParameter("bookcode"));
 		  String name=hsr.getParameter("name");
-		  int mobile=Integer.parseInt(hsr.getParameter ("mobile"));
-		  int total=Integer.parseInt(hsr.getParameter("total"));
+		  String mobile=hsr.getParameter("mobile");
+		 
 		  
-		  book.doUpdateBook(roomcode, checkin, checkout, name, mobile, total);
+		  book.doUpdateBook(bookcode, name, mobile, person);
 		  return"ok";
 		  		
 	  }
@@ -275,7 +288,7 @@ public class HomeController {
       //System.out.println("roomcode ["+roomcode+"]");
 	  // System.out.println("can");
 	   return "ok";			   
-   }
+   } 
    
    
 	@RequestMapping("/selected")
@@ -301,7 +314,7 @@ public class HomeController {
 			session.setAttribute("loginid", userid);////////////이어서 써야함
 			return "redirect:/booking";
 		} else {
-			return "home";
+			return "recheck_login";
 		}
 	}//일단 실행
 	

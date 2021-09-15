@@ -10,9 +10,9 @@
 		values(seq_booking.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7})
 	</insert> 
  	<select id="getBookedList" resultType="com.human.app.Bookinfo">
-	 	select a.bookcode,b.name roomname,c.name typename,b.howmany max_howmany,a.person,a.checkin,a.checkout,total,a.name,mobile
+	 	select a.bookcode,b.name roomname,c.name typename,b.howmany max_howmany,a.person,checkin,checkout,total,a.name,mobile,a.roomcode
 	 	from booking a, room b , roomtype c
-	 	<![CDATA[where a.checkout > #{param1} and a.checkin < #{param2}]]>
+	 	<![CDATA[where checkout > #{param1} and checkin < #{param2}]]>
 	 	 and a.roomcode=b.roomcode and b.type=c.typecode
 	 	 order by a.checkin
 	</select> 
@@ -37,7 +37,11 @@
 		) and a.roomcode=b.roomcode and b.type=c.typecode and c.typecode=#{param3} -->
 	 
 	 <update id="doUpdateBook">
-	 	update booking set bookcode=seq_booking.nextval,checkin={#param2},checkout=#{param3},name={#param4},mobile={#param5},total=#{param6}
-	 	where roomcode=#{param1}
+	 	update booking set name=#{param2},mobile=#{param3},person=#{param4}
+	 	where bookcode=#{param1}
 	 </update>
+	 
+	 <delete id="doDeleteBook">
+	 	delete from booking where bookcode=#{param1}
+	 </delete>
 </mapper>

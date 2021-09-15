@@ -1,11 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page session="false" %>
 <html>
+<head>
+	<title>Home</title>
+</head>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<body>
 <style>
 * {
 	background-color: rgb(255, 245, 232);
@@ -16,12 +20,26 @@ span#title {
 	font-size: 60px;
 	color: #e8ac9b;
 	position:relative;
-	left: 700px;
+	left: 300px;
 	top: 350px;
 	/*display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;*/
+}
+a{
+	width: 200px;
+	height:200px;
+	background-color: white;
+	display:block;
+	text-align: center;
+	margin: 5px;
+	font-family: 'Pacifico', cursive;
+	font-size: 30px;
+	color: #ccc2b6;
+	text-decoration: none; 
+	text-shadow: 0 0 24px;
+
 }
 .container{
 	display: flex;
@@ -88,17 +106,13 @@ input[type=submit] {
 	left: 60px;
 }
 </style>
-<head>
-<meta charset="UTF-8">
-<title>로그인창</title>
-</head>
-
 <body>
 <header>
 <span id="title">
-	Please enter your login information. 
+	Incorrect user ID or password! Please check again! 
 	</span>
 </header>
+<nav>
 <div class='container'>
 
 <div class='line' id='info_login'>
@@ -133,26 +147,7 @@ PW <input type=password name=pw><br><br>
 <div class='line'></div>
 <div class='line'></div>
 <div class='line'></div>
+</nav>
 
-</div>
 </body>
-<script src= 'http://code.jquery.com/jquery-3.6.0.js'></script>
-<script>
-$(document)
-.on('submit','#frmLogin',function(){
-	let pstr=$.trim($('input[name=userid]').val());
-	$('input[name=passcode]').val(pstr);
-	pstr=$.trim($('input[name=pw]').val());
-	$('input[name=pw]').val(pstr);
-	if($('input[name=userid]').val()==''){
-		alert('로그인아이디를 입력하세요');
-		return false;
-	}
-	if($('input[name=pw]').val()==''){
-		alert('비밀번호를 입력하세요');
-		return false;
-	}
-	return true;
-});
-</script>
 </html>
