@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <body>
 <style>
 * {
@@ -37,8 +38,8 @@ a{
 	font-family: 'Pacifico', cursive;
 	font-size: 30px;
 	color: #ccc2b6;
-	text-decoration: none; 
-	text-shadow: 0 0 24px;
+	/*text-decoration: none; 
+	text-shadow: 0 0 24px;*/
 
 }
 .container{
@@ -53,20 +54,27 @@ a{
 	width: 200px;
 	height: 200px;
 }
+span{
+	font-family: 'Gowun Dodum', sans-serif;
+	color: #cbd1c7;
+	position:relative;
+	top:190px;
+}
+
 </style>
 <body>
 <header>
 <span id="title">
-	Welcome to LaVida Hotel.  
+	Welcome to HotelLSB.  
 	</span>
 </header>
 <nav>
 <div class='container'>
 
-<div id="login"><a href='selected?path=login'>Login</a></div>
+<div ><a href='selected?path=login'>Login</a></div>
 <div class='line'></div>
-<div id="signup"><a href='selected?path=newbie'>Signin</a></div>
-<div class='line'></div>
+<div><a href='selected?path=newbie'>Signin</a></div>
+<div class='line' ></div>
 <div class='line'></div>
 <div class='line'></div>
 <div class='line'></div>
@@ -89,6 +97,6 @@ a{
 <div class='line'></div>
 </div>
 </nav>
-
+<span>(C)2021.(임샛별)all rights reserved.</span>
 </body>
 </html>

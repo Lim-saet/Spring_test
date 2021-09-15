@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
 * {
 	background-color: rgb(255, 245, 232);
@@ -89,6 +89,12 @@ input[type=submit] {
 	margin: 0px;
 	display: flex;
 }
+span#copyright{
+	font-family: 'Gowun Dodum', sans-serif;
+	color: #cbd1c7;
+	position:relative;
+	top:190px;
+}
 </style>
 <head>
 <meta charset="UTF-8">
@@ -142,7 +148,7 @@ CHECK PASSWORD <input type=password name=ch_password id=ch_pw><br><br>
 <div class='line'></div>
 <div class='line'></div>
 <div class='line'></div>
-
+<span id="copyright">(C)2021.(임샛별)all rights reserved.</span>
 
 
 </body>

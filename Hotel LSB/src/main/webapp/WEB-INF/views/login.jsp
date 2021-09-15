@@ -6,6 +6,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
 * {
 	background-color: rgb(255, 245, 232);
@@ -55,8 +56,6 @@ a{
 	font-family: 'Pacifico', cursive;
 	font-size: 25px;
 	color: #ccc2b6;
-	text-decoration: none; 
-	text-shadow: 0 0 24px;
 
 }
 input[type=text] {
@@ -86,6 +85,15 @@ input[type=submit] {
 	background-color: #ffeae3;
 	position:relative;
 	left: 60px;
+}
+input[type=submit]:hover{
+	background : #d6f7be;
+}
+span{
+	font-family: 'Gowun Dodum', sans-serif;
+	color: #cbd1c7;
+	position:relative;
+	top:190px;
 }
 </style>
 <head>
@@ -135,6 +143,7 @@ PW <input type=password name=pw><br><br>
 <div class='line'></div>
 
 </div>
+<span>(C)2021.(임샛별)all rights reserved.</span>
 </body>
 <script src= 'http://code.jquery.com/jquery-3.6.0.js'></script>
 <script>
