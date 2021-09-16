@@ -133,6 +133,7 @@ select#reservList{
 	position:relative;
 	top:179px;
 }
+
 </style>
 <head>
 <meta charset="UTF-8">
@@ -151,6 +152,7 @@ select#reservList{
         </nav>
             
             <div class='container'>
+            <div class='first_box'>
 				<div class='line'>
         			<table>
                 <tr>
@@ -192,6 +194,7 @@ select#reservList{
                        </table>
             
          </div> 
+         </div>
         </table>
        <div class="updown"></div>
          <div class=room_reserv>

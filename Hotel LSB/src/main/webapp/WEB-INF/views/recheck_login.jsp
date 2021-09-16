@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <body>
 <style>
 * {
@@ -91,6 +92,13 @@ input[type=submit] {
 	position:relative;
 	left: 60px;
 }
+span#copyright{
+	font-family: 'Gowun Dodum', sans-serif;
+	color: #cbd1c7;
+	position:relative;
+	top:190px;
+}
+
 </style>
 <body>
 <header>
@@ -134,6 +142,6 @@ PW <input type=password name=pw><br><br>
 <div class='line'></div>
 <div class='line'></div>
 </nav>
-
+<span id="copyright">(C)2021.(임샛별)all rights reserved.</span>
 </body>
 </html>
