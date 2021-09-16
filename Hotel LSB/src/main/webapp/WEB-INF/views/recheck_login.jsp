@@ -35,10 +35,9 @@ a{
 	text-align: center;
 	margin: 5px;
 	font-family: 'Pacifico', cursive;
-	font-size: 30px;
+	font-size: 26px;
 	color: #ccc2b6;
-	text-decoration: none; 
-	text-shadow: 0 0 24px;
+
 
 }
 .container{
@@ -63,20 +62,7 @@ a{
 	background-color: white;
 	
 }
-a{
-	width: 200px;
-	height:200px;
-	background-color: white;
-	display:block;
-	text-align: center;
-	margin: 5px;
-	font-family: 'Pacifico', cursive;
-	font-size: 25px;
-	color: #ccc2b6;
-	text-decoration: none; 
-	text-shadow: 0 0 24px;
 
-}
 input[type=text] {
     border : 2px solid #f7ede1;
     border-radius : 5px;

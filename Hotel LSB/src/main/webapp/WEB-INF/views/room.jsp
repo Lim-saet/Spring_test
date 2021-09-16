@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
 <head>
 <meta charset="UTF-8">
 <title>호텔객실 관리</title>
@@ -131,6 +132,21 @@ input[type=number]:hover{
 	position:relative;
 	top:179px;
 }
+div#box-color{
+	background: #DF7861; 
+}
+div#box-color1{
+	background: #ECB390;
+}
+div#box-color2{
+	background: #F9F3DF;
+}
+div#box-color3{
+	background: #D4E2D4;
+}
+div#box-color4{
+	background: #FCF8E8;
+}
 </style>
 <body>
     <header>
@@ -164,7 +180,7 @@ input[type=number]:hover{
                        </table>
          </div> 
        </div>
-     <div class="box1">
+     <div class="box1" id="box-color3">
          <div class=room_reserv>
              <table>
              <tr><td align="middle">
@@ -192,14 +208,15 @@ input[type=number]:hover{
          </div>
         </div>
        
+<div class="box1" ></div>
+<div class="box1" id="box-color"></div>
 <div class="box1"></div>
+<div class="box1" id="box-color1"></div>
 <div class="box1"></div>
+<div class="box1" id="box-color2"></div>
+
 <div class="box1"></div>
-<div class="box1"></div>
-<div class="box1"></div>
-<div class="box1"></div>
-<div class="box1"></div>
-<div class="box1"></div>
+<div class="box1" id="box-color4"></div>
 </div>
 <span id="copyright">(C)2021.(임샛별)all rights reserved.</span>
 </body>

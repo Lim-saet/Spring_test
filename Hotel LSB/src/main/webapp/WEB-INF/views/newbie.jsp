@@ -51,8 +51,7 @@ a{
 	font-family: 'Pacifico', cursive;
 	font-size: 25px;
 	color: #ccc2b6;
-	text-decoration: none; 
-	text-shadow: 0 0 24px;
+
 
 }
 input[type=text] {
