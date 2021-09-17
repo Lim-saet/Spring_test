@@ -154,8 +154,11 @@ div#box-color4{
        <div class='hoteltext'>_Hotel Room_</div>
         </header>
         <nav>
-            <p> <a href=/app/booking>예약관리</a>&nbsp;&nbsp;&nbsp; 
-          <span id="room_">객실관리</span> 
+        <p>
+        	<span id="room_">객실관리</span>&nbsp;&nbsp;&nbsp; 
+        	
+             <a href=/app/booking>예약관리</a>
+           
             &nbsp;&nbsp;&nbsp; 
             <a href=/app/logout name=back>로그아웃</a></p><br>
             </nav>
@@ -189,7 +192,7 @@ div#box-color4{
             <input type="text" id=roomName><pre></pre>
             <input type=hidden id=roomcode>
            방 종류
-           <select size=5 style='width:120px;' id=selType2 disabled>
+           <select size=5 style='width:120px;' id=selType2 >
            		<c:forEach items="${type}" var="room">
            			<option value='${room.typecode}'>${room.name}</option>
            		</c:forEach>

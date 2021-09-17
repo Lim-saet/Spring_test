@@ -120,7 +120,7 @@ PW <input type=password name=pw><br><br>
 <div class='line' id='info_login'>
 <a href=selected?path= name=back>Back to Home</a>
 </div>
-<div class='line'></div>
+<div><a href='selected?path=newbie'>Signin</a></div>
 <div class='line'></div>
 <div class='line'></div>
 <div class='line'></div>

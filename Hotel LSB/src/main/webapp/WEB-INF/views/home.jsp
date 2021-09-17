@@ -65,7 +65,7 @@ span{
 <body>
 <header>
 <span id="title">
-	Welcome to HotelLSB.  
+	Hotel LSB Admin-zone  
 	</span>
 </header>
 <nav>
