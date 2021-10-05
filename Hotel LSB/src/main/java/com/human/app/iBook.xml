@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<!-- namespace="인터페이스의 경로명+이름" -->
+<mapper namespace="com.human.app.iBook">
+	<insert id="doAddBooking">
+		insert into booking(bookcode,person,checkin,checkout,name,mobile,roomcode,total)
+		values(seq_booking.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7})
+	</insert> 
+ 	<select id="getBookedList" resultType="com.human.app.Bookinfo">
+	 	select a.bookcode,b.name roomname,c.name typename,b.howmany max_howmany,a.person,checkin,checkout,total,a.name,mobile,a.roomcode
+	 	from booking a, room b , roomtype c
+	 	<![CDATA[where checkout > #{param1} and checkin < #{param2}]]>
+	 	 and a.roomcode=b.roomcode and b.type=c.typecode
+	 	 order by a.checkin
+	</select> 
+	<select id="getBookList" resultType="com.human.app.Bookinfo">
+	select roomcode, name roomname, 
+      (select name from roomtype where typecode=#{param3}) as typename,
+      howmany, howmuch
+      from room
+      where type=#{param3} and roomcode not in(
+      select roomcode from room
+      INTERSECT
+      select roomcode from booking where (checkin between #{param1} and to_date(#{param2})-1) 
+      or (checkout between to_date(#{param1})+1 and to_date(#{param2})) or <![CDATA[(checkin<#{param1} and checkout>to_date(#{param2})-1))]]> 
+	</select>
+	
+	<!-- select b.roomcode, b.name roomname, c.name typename, b.howmany, b.howmuch 
+		from booking a, room b, roomtype c
+		where a.roomcode in(
+		select roomcode from room
+		minus
+		<![CDATA[select distinct roomcode from booking where a.checkout >#{param1} and a.checkin < #{param2}]]>
+		) and a.roomcode=b.roomcode and b.type=c.typecode and c.typecode=#{param3} -->
+	 
+	 <update id="doUpdateBook">
+	 	update booking set name=#{param2},mobile=#{param3},person=#{param4}
+	 	where bookcode=#{param1}
+	 </update>
+	 
+	 <delete id="doDeleteBook">
+	 	delete from booking where bookcode=#{param1}
+	 </delete>
+</mapper>

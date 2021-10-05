@@ -21,7 +21,7 @@ span#title {
 	font-size: 60px;
 	color: #e8ac9b;
 	position:relative;
-	left: 500px;
+	left: 300px;
 	top: 350px;
 	/*display: flex;
 	flex-direction: column;
@@ -36,10 +36,9 @@ a{
 	text-align: center;
 	margin: 5px;
 	font-family: 'Pacifico', cursive;
-	font-size: 30px;
+	font-size: 26px;
 	color: #ccc2b6;
-	/*text-decoration: none; 
-	text-shadow: 0 0 24px;*/
+
 
 }
 .container{
@@ -54,7 +53,46 @@ a{
 	width: 200px;
 	height: 200px;
 }
-span{
+#info_login{
+	background-color: white;
+	font-family: 'Pacifico', cursive;
+	margin: 0px;
+	display: flex;
+}
+#frmLogin{
+	background-color: white;
+	
+}
+
+input[type=text] {
+    border : 2px solid #f7ede1;
+    border-radius : 5px;
+    position:relative;
+	left: 20px;
+}
+input[type=text]:hover {
+    background : #ffeae3;
+}
+input[type=password] {
+    border : 2px solid #f7ede1;
+    border-radius : 5px;
+    position:relative;
+	left: 20px;
+}
+input[type=password]:hover {
+    background : #ffeae3;
+}
+input[type=submit] {
+    border : 1px solid #f7ede1;
+    border-radius : 5px;
+    font-family: 'Pacifico', cursive;
+	font-size: 15px;
+	color: #ccc2b6;
+	background-color: #ffeae3;
+	position:relative;
+	left: 60px;
+}
+span#copyright{
 	font-family: 'Gowun Dodum', sans-serif;
 	color: #cbd1c7;
 	position:relative;
@@ -65,38 +103,45 @@ span{
 <body>
 <header>
 <span id="title">
-	Hotel LSB Admin-zone  
+	Incorrect user ID or password! Please check again! 
 	</span>
 </header>
 <nav>
 <div class='container'>
 
-<div ><a href='selected?path=login'>Login</a></div>
-<div class='line'></div>
-<div><a href='selected?path=newbie'>Signin</a></div>
-<div class='line' ></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
-<div class='line'></div>
+<div class='line' id='info_login'>
+<form method="post" action="/app/check_user" id=frmLogin>
+ID <input type=text name=userid>
+PW <input type=password name=pw><br><br>
+<input type=submit value=Login>
+</form>
 </div>
+<div class='line'></div>
+<div class='line' id='info_login'>
+<a href=selected?path= name=back>Back to Home</a>
+</div>
+<div><a href='selected?path=newbie'>Signin</a></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
+<div class='line'></div>
 </nav>
-<span>(C)2021.(임샛별)all rights reserved.</span>
+<span id="copyright">(C)2021.(임샛별)all rights reserved.</span>
 </body>
 </html>
