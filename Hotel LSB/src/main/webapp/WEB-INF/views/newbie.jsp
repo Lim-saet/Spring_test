@@ -175,7 +175,7 @@ $(document)
 			alert('비밀번호가 확인번호와 일치하지 않습니다.');
 			return false;
 		}
-		return true;
+		return true;// 유효성 검사 리턴트루로!!!!!!!!!! 
 	})
 	
 </script>
