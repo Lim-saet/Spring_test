@@ -48,7 +48,7 @@ public class HomeController {
 		return "home";
 	}
 
-	@RequestMapping("/info")
+	@RequestMapping(value ="/info")
 //	public String doInfo(HttpServletRequest hsr, Model model) {
 //		String uid=hsr.getParameter("userid");
 //		String addr=hsr.getParameter("address");
@@ -81,7 +81,7 @@ public class HomeController {
 			return "choose";
 		}
 	}
-	@RequestMapping("/today/{daynumber}")
+	@RequestMapping(value ="/today/{daynumber}")
 	public String showNumber(@PathVariable int dayNumber,
 							Model model) {
 		model.addAttribute("day_num",dayNumber);
