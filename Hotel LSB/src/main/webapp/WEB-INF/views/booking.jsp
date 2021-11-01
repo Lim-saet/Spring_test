@@ -369,7 +369,7 @@ $(document)
  			}
  				$.post("http://localhost:8080/app/getBookedList",{checkin:$('#checkin1').val(),checkout:$('#checkout1').val()},function(result)
  				{
- 					$('#reservList').empty();
+ 					$('#reservList').empty();//값비우기
  					$.each(result,function(ndx,value){
  						str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['person']+
  						','+value['max_howmany']+','+value['checkin']+','+value['checkout']+','+value['total']+','+value['name']+','

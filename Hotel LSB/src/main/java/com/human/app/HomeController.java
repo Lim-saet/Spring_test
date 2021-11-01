@@ -62,9 +62,9 @@ public class HomeController {
 	   @RequestMapping(value="/signin",method=RequestMethod.POST,
 					produces = "application/text; charset=utf8")
 	   	public String doSignin(HttpServletRequest hsr) {
-		   System.out.println("sign");//들어감
+		   //System.out.println("sign");//들어감
 		   String realname= hsr.getParameter("realname");
-		   System.out.println("name["+realname+"]");//null값으로 들어감
+		   //System.out.println("name["+realname+"]");//null값으로 들어감
 		   String loginid= hsr.getParameter("loginid");
 		   String password= hsr.getParameter("password");
 
